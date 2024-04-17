@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "finalApp",
+    "slug": "finalApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/MyFood-logo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./src/assets/MyFood-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f4f4f4f4"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/MyFood-logo.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./src/assets/MyFood-logo.png"
+    }
+  }
+}
