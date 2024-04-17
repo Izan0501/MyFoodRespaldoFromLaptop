@@ -56,8 +56,20 @@ const Restaurant = ({ route, navigation }) => {
         orderList.push(newItem)
       }
       setOrderItems(orderList)
-    } else {
+    }
+    else {
+      let orderList = orderItems.slice();
+      let item = orderList.filter(a => a.menuId == menuId)
 
+      if(item.length > 0) {
+        if(item[0]?.quantity > 0) {
+          let NewQuantity = item[0].quantity - 1
+          item[0].quantity = NewQuantity
+          item[0].total = NewQuantity * price
+        }
+      }
+
+      setOrderItems(orderList)
     }
   }
 
@@ -68,20 +80,20 @@ const Restaurant = ({ route, navigation }) => {
   function getOrderQuantity(menuId) {
 
     let orderItem = orderItems.filter(a => a.menuId == menuId)
-  
-    if(orderItem.length > 0) {
+
+    if (orderItem.length > 0) {
       return orderItem[0].quantity
     } else {
       return 0
     }
-    
+
   }
 
   /**render goBack arrow and function */
 
   function renderHeader() {
     return (
-      <View style={{ flexDirection: "row", marginBottom: 10}}>
+      <View style={{ flexDirection: "row", marginBottom: 10 }}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons
             name="keyboard-backspace"
@@ -155,7 +167,7 @@ const Restaurant = ({ route, navigation }) => {
                 }}
               >
                 <TouchableOpacity
-                  //onPress={()=>{}}
+                  onPress={() => editOrderProductsQuantity('-', item.menuId, item.price)}
                   style={{
                     width: 50,
                     backgroundColor: "white",
@@ -195,7 +207,7 @@ const Restaurant = ({ route, navigation }) => {
                   </Text>
                 </View>
                 <TouchableOpacity
-                onPress={() => editOrderProductsQuantity('+', item.menuId, item.price)}
+                  onPress={() => editOrderProductsQuantity('+', item.menuId, item.price)}
                   style={{
                     width: 50,
                     backgroundColor: "white",
@@ -318,7 +330,7 @@ const Restaurant = ({ route, navigation }) => {
                 fontWeight: 'bold',
               }}
             >
-              45
+              10
             </Text>
           </View>
 
