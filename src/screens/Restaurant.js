@@ -17,8 +17,11 @@ import icons from "../constants/icons";
 import { Feather } from "@expo/vector-icons";
 
 const Restaurant = ({ route, navigation }) => {
+
   const [restaurants, setRestaurants] = React.useState(null);
   const [currentLocation, setcurrentLocation] = React.useState(null);
+  const [orderItems, setOrderItems] = React.useState([]);
+
   const screenWidth = Dimensions.get("window").width;
 
   React.useEffect(() => {
@@ -29,9 +32,56 @@ const Restaurant = ({ route, navigation }) => {
     setcurrentLocation(currentLocation);
   });
 
+  {
+    /**Function to edit product quantity */
+  }
+
+  function editOrderProductsQuantity(action, menuId, price) {
+
+    if (action == '+') {
+      let orderList = orderItems.slice();
+      let item = orderList.filter(a => a.menuId == menuId)
+
+      if (item.length > 0) {
+        let NewQuantity = item[0].quantity + 1
+        item[0].quantity = NewQuantity
+        item[0].total = item[0].quantity * price
+      } else {
+        const newItem = {
+          menuId: menuId,
+          quantity: 1,
+          price: price,
+          total: price
+        }
+        orderList.push(newItem)
+      }
+      setOrderItems(orderList)
+    } else {
+
+    }
+  }
+
+  {
+    /**get quantity of products */
+  }
+
+  function getOrderQuantity(menuId) {
+
+    let orderItem = orderItems.filter(a => a.menuId == menuId)
+  
+    if(orderItem.length > 0) {
+      return orderItem[0].quantity
+    } else {
+      return 0
+    }
+    
+  }
+
+  /**render goBack arrow and function */
+
   function renderHeader() {
     return (
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", marginBottom: 10}}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons
             name="keyboard-backspace"
@@ -59,7 +109,7 @@ const Restaurant = ({ route, navigation }) => {
   }
 
   {
-    /**restaurant products */
+    /**show restaurant products */
   }
 
   function renderFoodData() {
@@ -88,11 +138,11 @@ const Restaurant = ({ route, navigation }) => {
                   marginTop: 0,
                   width: screenWidth,
                   height: "100%",
-                  borderRadius: 50,
+                  borderRadius: 35,
                 }}
               />
 
-              {/**ProductQuantity */}
+              {/**ProductQuantityButton */}
 
               <View
                 style={{
@@ -105,6 +155,7 @@ const Restaurant = ({ route, navigation }) => {
                 }}
               >
                 <TouchableOpacity
+                  //onPress={()=>{}}
                   style={{
                     width: 50,
                     backgroundColor: "white",
@@ -140,10 +191,11 @@ const Restaurant = ({ route, navigation }) => {
                       fontWeight: "bold",
                     }}
                   >
-                    1
+                    {getOrderQuantity(item.menuId)}
                   </Text>
                 </View>
                 <TouchableOpacity
+                onPress={() => editOrderProductsQuantity('+', item.menuId, item.price)}
                   style={{
                     width: 50,
                     backgroundColor: "white",
@@ -333,12 +385,12 @@ const Restaurant = ({ route, navigation }) => {
           {/**Order button */}
 
           <View
-            style= {{
+            style={{
               width: screenWidth * 0.9,
               padding: 10,
-              backgroundColor:'#f77f00',
+              backgroundColor: '#f77f00',
               alignItems: 'center',
-              justifyContent:'center',
+              justifyContent: 'center',
               borderRadius: 30,
               marginLeft: 20,
               marginBottom: 20
@@ -346,7 +398,7 @@ const Restaurant = ({ route, navigation }) => {
           >
             <TouchableOpacity>
               <Text
-                style= {{
+                style={{
                   color: 'white',
                   fontSize: 22,
                   lineHeight: 30,
@@ -378,7 +430,7 @@ const styles = StyleSheet.create({
   androidSafeArea: {
     flex: 1,
     backgroundColor: "white",
-    paddingTop: Platform.OS === "android" ? 40 : 0,
+    paddingTop: Platform.OS == "android" ? 40 : 0,
     haderButton: {
       width: 50,
       paddingLeft: 40,
