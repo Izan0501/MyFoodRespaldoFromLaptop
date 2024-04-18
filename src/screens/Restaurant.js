@@ -33,19 +33,21 @@ const Restaurant = ({ route, navigation }) => {
   });
 
   {
-    /**Function to edit product quantity */
+    /**Function to edit product quantity (add and substract) */
   }
 
   function editOrderProductsQuantity(action, menuId, price) {
 
+    let orderList = orderItems.slice();
+    let item = orderList.filter(a => a.menuId == menuId)
+
     if (action == '+') {
-      let orderList = orderItems.slice();
-      let item = orderList.filter(a => a.menuId == menuId)
 
       if (item.length > 0) {
         let NewQuantity = item[0].quantity + 1
         item[0].quantity = NewQuantity
         item[0].total = item[0].quantity * price
+
       } else {
         const newItem = {
           menuId: menuId,
@@ -56,13 +58,10 @@ const Restaurant = ({ route, navigation }) => {
         orderList.push(newItem)
       }
       setOrderItems(orderList)
-    }
-    else {
-      let orderList = orderItems.slice();
-      let item = orderList.filter(a => a.menuId == menuId)
 
-      if(item.length > 0) {
-        if(item[0]?.quantity > 0) {
+    } else {
+      if (item?.length > 0) {
+        if (item[0].quantity > 0) {
           let NewQuantity = item[0].quantity - 1
           item[0].quantity = NewQuantity
           item[0].total = NewQuantity * price
@@ -70,6 +69,7 @@ const Restaurant = ({ route, navigation }) => {
       }
 
       setOrderItems(orderList)
+
     }
   }
 
@@ -89,7 +89,29 @@ const Restaurant = ({ route, navigation }) => {
 
   }
 
-  /**render goBack arrow and function */
+  {
+    /**show the number of products added  */
+  }
+
+  function getProductsQuantity() {
+
+    let itemCount = orderItems.reduce((a, b) => a + (b.quantity || 0), 0)
+
+    return itemCount
+
+  }
+
+    {
+      /**show the total price function */
+    }
+
+  function getTotalPrice() {
+    let total = orderItems.reduce((a, b) => a + (b.total || 0), 0);
+  
+    return total.toFixed(2)
+  }
+
+  {/**render goBack arrow / function */}
 
   function renderHeader() {
     return (
@@ -309,6 +331,7 @@ const Restaurant = ({ route, navigation }) => {
             style={{
               flexDirection: "row",
               justifyContent: 'space-between',
+              alignItems: 'center',
               paddingVertical: 20,
               paddingHorizontal: 20,
               borderBottomColor: '#F6F6F7',
@@ -318,19 +341,21 @@ const Restaurant = ({ route, navigation }) => {
             <Text
               style={{
                 fontSize: 20,
-                fontWeight: '800',
+                fontWeight: 'bold',
+                paddingRight: 10
               }}
             >
-              Items in cart
+              You added {
+                getProductsQuantity()
+              } products
             </Text>
-
             <Text
               style={{
                 fontSize: 25,
                 fontWeight: 'bold',
               }}
             >
-              10
+              ${getTotalPrice()}
             </Text>
           </View>
 
@@ -396,7 +421,7 @@ const Restaurant = ({ route, navigation }) => {
 
           {/**Order button */}
 
-          <View
+          <TouchableOpacity
             style={{
               width: screenWidth * 0.9,
               padding: 10,
@@ -407,8 +432,13 @@ const Restaurant = ({ route, navigation }) => {
               marginLeft: 20,
               marginBottom: 20
             }}
+            onPress={() => navigation.navigate('OrderDelivery', {
+              restaurants: restaurants,
+              currentLocation: currentLocation
+            }
+            )}
           >
-            <TouchableOpacity>
+            <View>
               <Text
                 style={{
                   color: 'white',
@@ -419,10 +449,10 @@ const Restaurant = ({ route, navigation }) => {
               >
                 Order
               </Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
         </View>
-      </View>
+      </View >
     )
   }
 
