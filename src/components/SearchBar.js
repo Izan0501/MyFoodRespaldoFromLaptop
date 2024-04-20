@@ -8,6 +8,7 @@ import React from 'react'
 import { Icon } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native'
 
+
 const SearchBar = () => {
 
     const navigation = useNavigation();
@@ -27,7 +28,7 @@ const SearchBar = () => {
                 />
             </View>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Settings')}
+              onPress={() => navigation.navigate('SettingsScreen')}
             >
                 <View style={styles.navBtn}>
                     <Icon

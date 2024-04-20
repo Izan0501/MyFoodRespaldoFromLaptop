@@ -9,7 +9,7 @@ import {
     Favs,
 } from '../screens';
 
-import Settings from '../screens/Settings';
+import SettingsScreen from '../screens/SettingsScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
@@ -28,7 +28,7 @@ const StackNav = () => {
             <Stack.Screen name='Favs' component={Favs} />
             <Stack.Screen name='Profile' component={Profile} />
             <Stack.Screen name='OrderDelivery' component={OrderDelivery} />
-            <Stack.Screen name='Settings' component={Settings} />
+            <Stack.Screen name='SettingsScreen' component={SettingsScreen} />
         </Stack.Navigator>
     )
 };

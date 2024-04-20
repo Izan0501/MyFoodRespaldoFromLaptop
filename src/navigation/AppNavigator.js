@@ -8,7 +8,7 @@ import {
     Favs,
     Cart
 } from '../screens';
-
+import SettingsScreen from '../screens/SettingsScreen';
 import StackNav from './StackNav';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
@@ -99,8 +99,8 @@ const AppNavigator = () => {
                 />
 
                 <Tab.Screen
-                    name='Favs'
-                    component={Favs}
+                    name='Settings'
+                    component={SettingsScreen}
                     options={{
                         tabBarIcon: ({ focused }) => {
                             return (
@@ -111,7 +111,7 @@ const AppNavigator = () => {
                                     }}
                                 >
                                     <MaterialIcons
-                                        name="favorite"
+                                        name="settings"
                                         size={26}
                                         color={
                                             focused ? '#F9813A' : '#E5E5E5'

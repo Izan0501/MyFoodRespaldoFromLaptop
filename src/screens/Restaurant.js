@@ -148,7 +148,6 @@ const Restaurant = ({ route, navigation }) => {
 
   function renderFoodData() {
 
-
     return (
       <Animated.ScrollView
         horizontal
