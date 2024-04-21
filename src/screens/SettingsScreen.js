@@ -12,14 +12,9 @@ import { SafeAreaView } from 'react-native';
 
 const SettingsScreen = ({ navigation }) => {
 
-  const ListItems = [
-    { icon: 'person-outline', text: 'Edit Profile', action: navigateToEdtiProfile },
-    { icon: 'security', text: 'Security', action: navigateToSecurity },
-    { icon: 'notifications-none', text: 'Notifications', action: navigateToNotifications },
-    { icon: 'lock-outline', text: 'Privacy', action: navigateToNotifications }
-  ];
+  {/**Navigation Function Section */ }
 
-  const navigateToEdtiProfile = () => {
+  const navigateToEditProfile = () => {
     navigation.navigate('EditProfile')
   };
 
@@ -31,17 +26,77 @@ const SettingsScreen = ({ navigation }) => {
     console.log('Notifications function');
   };
 
-  const navigateToPrvacy = () => {
+  const navigateToPrivacy = () => {
     console.log('Privacity function');
   };
 
-  /*const renderListItems = (icon, text, action) => {
+  const navigateToSubscription = () => {
+    console.log('Privacity function');
+  };
 
-  }*/
+  const navigateToSupport = () => {
+    console.log('Privacity function');
+  };
+
+  const navigateToTermsAndPolicies = () => {
+    console.log('Privacity function');
+  };
 
   const returnToHome = () => {
     navigation.navigate('Restaurant')
   };
+
+  const navigateToFreeSpace = () => {
+    console.log('Free Space Function');
+  }
+
+  const navigateToDateServer = () => {
+    console.log('Date server');
+  }
+
+  const navigateToReportProblem = () => {
+    console.log('Report a Problem');
+  }
+
+  const addAccount = () => {
+    console.log('Add Account');
+  }
+
+  const logout = () => {
+
+  }
+
+  {/** Account Items */ }
+
+  const listAccountItems = [
+    { icon: 'person-outline', text: 'Edit Profile', action: navigateToEditProfile },
+    { icon: 'security', text: 'Security', action: navigateToSecurity },
+    { icon: 'notifications-none', text: 'Notifications', action: navigateToNotifications },
+    { icon: 'lock-outline', text: 'Privacy', action: navigateToPrivacy }
+  ];
+
+  {/**support Items */ }
+
+  const listSupportItems = [
+    { icon: 'credit-card', text: 'My Subscrition', action: navigateToSubscription },
+    { icon: 'help-outline', text: 'Help & Support', action: navigateToSupport },
+    { icon: 'info-outline', text: 'Terms and Policies', action: navigateToTermsAndPolicies },
+  ];
+
+  const listCacheAndPhoneItems = [
+    { icon: 'delete-outline', text: 'Free Space', action: navigateToFreeSpace },
+    { icon: 'save-alt', text: 'Data Saver', action: navigateToDateServer },
+
+  ];
+
+  const listActionItems = [
+
+    { icon: 'outline-flag', text: 'Report a problem', action: navigateToReportProblem },
+    { icon: 'help-outline', text: 'Add Account', action: addAccount },
+    { icon: 'info-outline', text: 'Log Out', action: logout },
+
+  ]
+
 
   {/**render header */ }
 
@@ -68,36 +123,115 @@ const SettingsScreen = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Settings</Text>
       </View>
+
+      {/**Account Section */}
+
       <View style={{ marginBottom: 12 }}>
-        <Text style={styles.listItemSectionTitle}>Account</Text>
+        <Text style={styles.listAccountItemSectionTitle}>Account</Text>
         <View
           style={{
             borderRadius: 12,
-            backgroundColor: 'gray'
+            backgroundColor: '#E5E5E5'
           }}
         >
+          {/**render list Account Items */}
           {
-            ListItems.map((item, index) => (
+            listAccountItems.map((item, index) => (
               <React.Fragment
                 key={index}
               >
                 <TouchableOpacity
-                onPress={item.action}
-                style={
-                  styles.listItem
-                }
-              >
-                <MaterialIcons
-                  name={item.icon}
-                  size={24}
-                  color={'black'}
-                />
-                <Text
-                  style={styles.listItemTxt}
+                  onPress={item.action}
+                  style={
+                    styles.listItem
+                  }
                 >
-                  {item.text}
-                </Text>
-              </TouchableOpacity>
+                  <MaterialIcons
+                    name={item.icon}
+                    size={24}
+                    color={'black'}
+                  />
+                  <Text
+                    style={styles.listItemTxt}
+                  >
+                    {item.text}
+                  </Text>
+                </TouchableOpacity>
+              </React.Fragment>
+            ))
+          }
+        </View>
+      </View>
+
+      {/** Support List Items */}
+
+      <View style={{ marginBottom: 12 }}>
+        <Text style={styles.listAccountItemSectionTitle}>Support & About</Text>
+        <View
+          style={{
+            borderRadius: 12,
+            backgroundColor: '#E5E5E5'
+          }}
+        >
+          {/**render list Support Items */}
+          {
+            listSupportItems.map((item, index) => (
+              <React.Fragment
+                key={index}
+              >
+                <TouchableOpacity
+                  onPress={item.action}
+                  style={
+                    styles.listItem
+                  }
+                >
+                  <MaterialIcons
+                    name={item.icon}
+                    size={24}
+                    color={'#000'}
+                  />
+                  <Text
+                    style={styles.listItemTxt}
+                  >
+                    {item.text}
+                  </Text>
+                </TouchableOpacity>
+              </React.Fragment>
+            ))
+          }
+        </View>
+      </View>
+      <View style={{ marginBottom: 12 }}>
+        <Text style={styles.listAccountItemSectionTitle}>Cache & Phone</Text>
+        <View
+          style={{
+            borderRadius: 12,
+            backgroundColor: '#E5E5E5'
+          }}
+        >
+          {/**render list Cache Items */}
+          {
+            listCacheAndPhoneItems.map((item, index) => (
+              <React.Fragment
+                key={index}
+              >
+                <TouchableOpacity
+                  onPress={item.action}
+                  style={
+                    styles.listItem
+                  }
+                >
+                  <MaterialIcons
+                    name={item.icon}
+                    size={24}
+                    color={'#000'}
+                  />
+                  <Text
+                    style={styles.listItemTxt}
+                  >
+                    {item.text}
+                  </Text>
+                </TouchableOpacity>
               </React.Fragment>
             ))
           }
@@ -146,7 +280,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16
   },
-  listItemSectionTitle: {
+  listAccountItemSectionTitle: {
     marginVertical: 10,
     fontSize: 20,
     fontWeight: 'bold',
