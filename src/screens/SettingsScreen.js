@@ -6,7 +6,7 @@ import {
   Platform,
   TouchableOpacity
 } from 'react-native'
-
+import { ScrollView } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from 'react-native';
 
@@ -91,7 +91,7 @@ const SettingsScreen = ({ navigation }) => {
 
   const listActionItems = [
 
-    { icon: 'outline-flag', text: 'Report a problem', action: navigateToReportProblem },
+    { icon: 'outlined-flag', text: 'Report a problem', action: navigateToReportProblem },
     { icon: 'help-outline', text: 'Add Account', action: addAccount },
     { icon: 'info-outline', text: 'Log Out', action: logout },
 
@@ -114,7 +114,7 @@ const SettingsScreen = ({ navigation }) => {
           <MaterialIcons
             name="keyboard-backspace"
             size={30}
-            color="black"
+            color="#000"
             style={{
               marginLeft: 10.5,
               marginTop: 10,
@@ -126,117 +126,161 @@ const SettingsScreen = ({ navigation }) => {
 
       {/**Account Section */}
 
-      <View style={{ marginBottom: 12 }}>
-        <Text style={styles.listAccountItemSectionTitle}>Account</Text>
-        <View
-          style={{
-            borderRadius: 12,
-            backgroundColor: '#E5E5E5'
-          }}
-        >
-          {/**render list Account Items */}
-          {
-            listAccountItems.map((item, index) => (
-              <React.Fragment
-                key={index}
-              >
-                <TouchableOpacity
-                  onPress={item.action}
-                  style={
-                    styles.listItem
-                  }
+      <ScrollView>
+        <View style={{ marginBottom: 12 }}>
+          <Text style={styles.listAccountItemSectionTitle}>Account</Text>
+          <View
+            style={{
+              borderRadius: 12,
+              backgroundColor: '#E5E5E5'
+            }}
+          >
+            {/**render list Account Items */}
+            {
+              listAccountItems.map((item, index) => (
+                <React.Fragment
+                  key={index}
                 >
-                  <MaterialIcons
-                    name={item.icon}
-                    size={24}
-                    color={'black'}
-                  />
-                  <Text
-                    style={styles.listItemTxt}
+                  <TouchableOpacity
+                    onPress={item.action}
+                    style={
+                      styles.listItem
+                    }
                   >
-                    {item.text}
-                  </Text>
-                </TouchableOpacity>
-              </React.Fragment>
-            ))
-          }
+                    <MaterialIcons
+                      name={item.icon}
+                      size={24}
+                      color={'black'}
+                    />
+                    <Text
+                      style={styles.listItemTxt}
+                    >
+                      {item.text}
+                    </Text>
+                  </TouchableOpacity>
+                </React.Fragment>
+              ))
+            }
+          </View>
         </View>
-      </View>
 
-      {/** Support List Items */}
+        {/** Support List Items */}
 
-      <View style={{ marginBottom: 12 }}>
-        <Text style={styles.listAccountItemSectionTitle}>Support & About</Text>
-        <View
-          style={{
-            borderRadius: 12,
-            backgroundColor: '#E5E5E5'
-          }}
-        >
-          {/**render list Support Items */}
-          {
-            listSupportItems.map((item, index) => (
-              <React.Fragment
-                key={index}
-              >
-                <TouchableOpacity
-                  onPress={item.action}
-                  style={
-                    styles.listItem
-                  }
+        <View style={{ marginBottom: 12 }}>
+          <Text style={styles.listAccountItemSectionTitle}>Support & About</Text>
+          <View
+            style={{
+              borderRadius: 12,
+              backgroundColor: '#E5E5E5'
+            }}
+          >
+            {/**render list Support Items */}
+            {
+              listSupportItems.map((item, index) => (
+                <React.Fragment
+                  key={index}
                 >
-                  <MaterialIcons
-                    name={item.icon}
-                    size={24}
-                    color={'#000'}
-                  />
-                  <Text
-                    style={styles.listItemTxt}
+                  <TouchableOpacity
+                    onPress={item.action}
+                    style={
+                      styles.listItem
+                    }
                   >
-                    {item.text}
-                  </Text>
-                </TouchableOpacity>
-              </React.Fragment>
-            ))
-          }
+                    <MaterialIcons
+                      name={item.icon}
+                      size={24}
+                      color={'#000'}
+                    />
+                    <Text
+                      style={styles.listItemTxt}
+                    >
+                      {item.text}
+                    </Text>
+                  </TouchableOpacity>
+                </React.Fragment>
+              ))
+            }
+          </View>
         </View>
-      </View>
-      <View style={{ marginBottom: 12 }}>
-        <Text style={styles.listAccountItemSectionTitle}>Cache & Phone</Text>
-        <View
-          style={{
-            borderRadius: 12,
-            backgroundColor: '#E5E5E5'
-          }}
-        >
-          {/**render list Cache Items */}
-          {
-            listCacheAndPhoneItems.map((item, index) => (
-              <React.Fragment
-                key={index}
-              >
-                <TouchableOpacity
-                  onPress={item.action}
-                  style={
-                    styles.listItem
-                  }
+
+        {/**List Cache Items */}
+
+        <View style={{ marginBottom: 12 }}>
+          <Text style={styles.listAccountItemSectionTitle}>Cache & Phone</Text>
+          <View
+            style={{
+              borderRadius: 12,
+              backgroundColor: '#E5E5E5'
+            }}
+          >
+            {/**render list Cache Items */}
+            {
+              listCacheAndPhoneItems.map((item, index) => (
+                <React.Fragment
+                  key={index}
                 >
-                  <MaterialIcons
-                    name={item.icon}
-                    size={24}
-                    color={'#000'}
-                  />
-                  <Text
-                    style={styles.listItemTxt}
+                  <TouchableOpacity
+                    onPress={item.action}
+                    style={
+                      styles.listItem
+                    }
                   >
-                    {item.text}
-                  </Text>
-                </TouchableOpacity>
-              </React.Fragment>
-            ))
-          }
+                    <MaterialIcons
+                      name={item.icon}
+                      size={24}
+                      color={'#000'}
+                    />
+                    <Text
+                      style={styles.listItemTxt}
+                    >
+                      {item.text}
+                    </Text>
+                  </TouchableOpacity>
+                </React.Fragment>
+              ))
+            }
+          </View>
         </View>
-      </View>
+
+        {/**List Action Settings */}
+
+        <View style={{ marginBottom: 12 }}>
+          <Text style={styles.listAccountItemSectionTitle}>Actions Settings</Text>
+          <View
+            style={{
+              borderRadius: 12,
+              backgroundColor: '#E5E5E5'
+            }}
+          >
+            {/**render list Action Items */}
+            {
+              listActionItems.map((item, index) => (
+                <React.Fragment
+                  key={index}
+                >
+                  <TouchableOpacity
+                    onPress={item.action}
+                    style={
+                      styles.listItem
+                    }
+                  >
+                    <MaterialIcons
+                      name={item.icon}
+                      size={24}
+                      color={'#000'}
+                    />
+                    <Text
+                      style={styles.listItemTxt}
+                    >
+                      {item.text}
+                    </Text>
+                  </TouchableOpacity>
+                </React.Fragment>
+              ))
+            }
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
