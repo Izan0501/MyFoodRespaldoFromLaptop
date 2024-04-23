@@ -3,12 +3,12 @@ import React from 'react'
 
 const EditProfile = () => {
     return (
-        <View>
-            <Text
-                style={
-                    styles.androidSafeArea
-                }
-            >
+        <View
+            style={
+                styles.androidSafeArea
+            }
+        >
+            <Text>
                 EditProfile
             </Text>
         </View>
@@ -22,10 +22,5 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "white",
         paddingTop: Platform.OS == "android" ? 40 : 0,
-        haderButton: {
-            width: 50,
-            paddingLeft: 40,
-            justifyContent: "center",
-        },
     },
 })

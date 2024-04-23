@@ -8,6 +8,7 @@ import {
     Favs,
     Cart
 } from '../screens';
+
 import SettingsScreen from '../screens/SettingsScreen';
 import StackNav from './StackNav';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -46,59 +47,6 @@ const AppNavigator = () => {
                 }
             >
                 <Tab.Screen
-                    name='Main'
-                    component={StackNav}
-                    options={{
-                        tabBarIcon: ({ focused }) => {
-                            return (
-                                <View
-                                    style={{
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <MaterialIcons
-                                        name="local-restaurant"
-                                        size={30}
-                                        color={
-                                            focused ? '#F9813A' : '#E5E5E5'
-                                        }
-                                    />
-                                </View>
-                            )
-
-                        }
-                    }}
-                />
-
-                <Tab.Screen
-                    name='Cart'
-                    component={Cart}
-                    options={{
-                        tabBarIcon: ({ focused }) => {
-                            return (
-                                <View
-                                    style={{
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <Feather
-                                        name="shopping-bag"
-                                        size={26}
-                                        color={
-                                            focused ? '#F9813A' : '#E5E5E5'
-                                        }
-                                    />
-
-                                </View>
-                            )
-
-                        }
-                    }}
-                />
-
-                <Tab.Screen
                     name='Settings'
                     component={SettingsScreen}
                     options={{
@@ -113,6 +61,32 @@ const AppNavigator = () => {
                                     <MaterialIcons
                                         name="settings"
                                         size={26}
+                                        color={
+                                            focused ? '#F9813A' : '#E5E5E5'
+                                        }
+                                    />
+                                </View>
+                            )
+
+                        }
+                    }}
+                />
+
+                <Tab.Screen
+                    name='Main'
+                    component={StackNav}
+                    options={{
+                        tabBarIcon: ({ focused }) => {
+                            return (
+                                <View
+                                    style={{
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <MaterialIcons
+                                        name="local-restaurant"
+                                        size={30}
                                         color={
                                             focused ? '#F9813A' : '#E5E5E5'
                                         }
@@ -151,7 +125,6 @@ const AppNavigator = () => {
                 />
             </Tab.Navigator>
         </NavigationContainer>
-
     );
 };
 

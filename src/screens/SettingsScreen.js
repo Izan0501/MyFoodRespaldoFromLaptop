@@ -63,7 +63,7 @@ const SettingsScreen = ({ navigation }) => {
   }
 
   const logout = () => {
-
+    console.log('Logout');
   }
 
   {/** Account Items */ }
@@ -83,11 +83,16 @@ const SettingsScreen = ({ navigation }) => {
     { icon: 'info-outline', text: 'Terms and Policies', action: navigateToTermsAndPolicies },
   ];
 
+
+  {/**list cache Items */ }
+
   const listCacheAndPhoneItems = [
     { icon: 'delete-outline', text: 'Free Space', action: navigateToFreeSpace },
     { icon: 'save-alt', text: 'Data Saver', action: navigateToDateServer },
 
   ];
+
+  {/** List Actions Item  */ }
 
   const listActionItems = [
 
@@ -96,7 +101,6 @@ const SettingsScreen = ({ navigation }) => {
     { icon: 'info-outline', text: 'Log Out', action: logout },
 
   ]
-
 
   {/**render header */ }
 
@@ -135,7 +139,9 @@ const SettingsScreen = ({ navigation }) => {
               backgroundColor: '#E5E5E5'
             }}
           >
+
             {/**render list Account Items */}
+
             {
               listAccountItems.map((item, index) => (
                 <React.Fragment
@@ -171,10 +177,12 @@ const SettingsScreen = ({ navigation }) => {
           <View
             style={{
               borderRadius: 12,
-              backgroundColor: '#E5E5E5'
+              backgroundColor:  '#E5E5E5'
             }}
           >
+
             {/**render list Support Items */}
+
             {
               listSupportItems.map((item, index) => (
                 <React.Fragment
@@ -214,6 +222,7 @@ const SettingsScreen = ({ navigation }) => {
             }}
           >
             {/**render list Cache Items */}
+
             {
               listCacheAndPhoneItems.map((item, index) => (
                 <React.Fragment
@@ -252,7 +261,9 @@ const SettingsScreen = ({ navigation }) => {
               backgroundColor: '#E5E5E5'
             }}
           >
+
             {/**render list Action Items */}
+
             {
               listActionItems.map((item, index) => (
                 <React.Fragment
@@ -304,10 +315,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   backBtn: {
+    marginTop: -7.5,
     position: 'absolute',
     left: 0
   },
   headerTitle: {
+    marginBottom: 12,
     fontSize: 23,
     fontWeight: 'bold',
     justifyContent: 'center',
