@@ -6,21 +6,44 @@ import {
     SafeAreaView,
     TouchableOpacity,
     ScrollView,
-    Image
+    Image,
+    TextInput
 } from 'react-native'
 
 import React from 'react'
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from 'react';
-import avatarsImg from '../constants/avatars';
+import { avatarsImg, imagesDataUrl } from '../constants/avatars';
+import * as ImagePicker from 'expo-image-picker';
 
 
 const Profile = ({ navigation }) => {
 
-    const [selectedImage, setSelectedImage] = useState(avatarsImg[4]);
+    const [selectedImage, setSelectedImage] = useState(avatarsImg[0]);
 
-    const handleImageSelection = () => {
-        //let result = ImagePicker
+    /*const [name, setName] = useState("User");
+
+    const [email, setEmail] = useState= ("UserName@gmail.com")
+
+    const [password, setPassword]= useState("RandomPassword");
+
+    const [country, setCountry] = useState("Argentina");
+    */
+    const handleImageSelection = async () => {
+
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4,4],
+            quality: 1
+        })
+
+        console.log(result.assets);
+
+        if(!result.canceled) {
+            setSelectedImage(result.assets[0])
+        }
+
     }
 
     const returnToHome = () => {
@@ -65,21 +88,50 @@ const Profile = ({ navigation }) => {
                             style={styles.avatarImage}
                         />
                         <View
-                           style= {styles.imageBtn}
+                            style={styles.imageBtn}
                         >
                             <MaterialIcons
-                              name = 'photo-camera'
-                              size={32}
-                              color={'orange'}
+                                name='photo-camera'
+                                size={32}
+                                color={'orange'}
                             />
                         </View>
                     </TouchableOpacity>
                 </View>
+
+                <View>
+                    <View
+                      style= {styles.inputContainer}
+                    >
+                        <Text style = {styles.inputTitleContent}>Name</Text>
+                        <View style = {styles.inputContent}>
+                            <TextInput 
+                                cursorColor={'gray'}
+                                //value={name}
+                                //onChangeText={value => setName(value)}
+                                editable={true}
+                            />
+                        </View>
+                    </View>
+                    <View
+                      style= {styles.inputContainer}
+                    >
+                        <Text style = {styles.inputTitleContent}>Email</Text>
+                        <View style = {styles.inputContent}>
+                            <TextInput 
+                                cursorColor={'gray'}
+                                //value={email}
+                                //onChangeText={value => setEmail(value)}
+                                editable={true}
+                            />
+                        </View>
+                    </View>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
-}
 
+}
 export default Profile
 
 const styles = StyleSheet.create({
@@ -117,10 +169,31 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'orange'
     },
-    imageBtn : {
+    imageBtn: {
         position: 'absolute',
         bottom: 0,
         right: 10,
         zIndex: 9999
-    }
+    },
+    inputContainer: {
+        flexDirection: 'column',
+        marginBottom: 6,
+        marginLeft: 20
+    },
+    inputTitleContent: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        
+    },
+    inputContent: {
+        height: 44,
+        width: '100%',
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 5,
+        marginVertical: 6,
+        justifyContent: 'center',
+        paddingLeft: 5,
+        marginLeft: -10
+    },
 })
