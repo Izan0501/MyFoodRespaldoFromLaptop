@@ -15,32 +15,51 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from 'react';
 import { avatarsImg, imagesDataUrl } from '../constants/avatars';
 import * as ImagePicker from 'expo-image-picker';
+import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 
 
 const Profile = ({ navigation }) => {
 
     const [selectedImage, setSelectedImage] = useState(avatarsImg[0]);
 
-    /*const [name, setName] = useState("User");
+    const [name, setName] = useState("User");
 
-    const [email, setEmail] = useState= ("UserName@gmail.com")
+    const [email, setEmail] = useState("UserName@gmail.com")
 
-    const [password, setPassword]= useState("RandomPassword");
+    const [password, setPassword] = useState("RandomPassword");
 
     const [country, setCountry] = useState("Argentina");
-    */
+
+    const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
+    const today = new Date();
+    const startDate = getFormatedDate (
+        today.setDate(today.getDate() + 1),
+        "YYYY/MM/DD"
+    )
+
+    const [selectedStartDate, setSelectedStartDate] = useState('01/01/1990');
+    const [startedDate, setSatartedDate] = useState("12/12/2024");
+
+    const handleChangeStartDate = (propDate) => {
+        setSatartedDate(propDate)
+    }
+
+    const handleOnChangeStartDate = () => {
+        setOpenStartDatePicker(!openStartDatePicker)
+    }
+
     const handleImageSelection = async () => {
 
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            aspect: [4,4],
+            aspect: [4, 4],
             quality: 1
         })
 
         console.log(result.assets);
 
-        if(!result.canceled) {
+        if (!result.canceled) {
             setSelectedImage(result.assets[0])
         }
 
@@ -101,30 +120,55 @@ const Profile = ({ navigation }) => {
 
                 <View>
                     <View
-                      style= {styles.inputContainer}
+                        style={styles.inputContainer}
                     >
-                        <Text style = {styles.inputTitleContent}>Name</Text>
-                        <View style = {styles.inputContent}>
-                            <TextInput 
+                        <Text style={styles.inputTitleContent}>Name</Text>
+                        <View style={styles.inputContent}>
+                            <TextInput
                                 cursorColor={'gray'}
-                                //value={name}
-                                //onChangeText={value => setName(value)}
+                                value={name}
+                                onChangeText={value => setName(value)}
                                 editable={true}
                             />
                         </View>
                     </View>
                     <View
-                      style= {styles.inputContainer}
+                        style={styles.inputContainer}
                     >
-                        <Text style = {styles.inputTitleContent}>Email</Text>
-                        <View style = {styles.inputContent}>
-                            <TextInput 
+                        <Text style={styles.inputTitleContent}>Email</Text>
+                        <View style={styles.inputContent}>
+                            <TextInput
                                 cursorColor={'gray'}
-                                //value={email}
-                                //onChangeText={value => setEmail(value)}
+                                value={email}
+                                onChangeText={value => setEmail(value)}
                                 editable={true}
                             />
                         </View>
+                    </View>
+                    <View
+                        style={styles.inputContainer}
+                    >
+                        <Text style={styles.inputTitleContent}>Password</Text>
+                        <View style={styles.inputContent}>
+                            <TextInput
+                                cursorColor={'gray'}
+                                value={password}
+                                onChangeText={value => setPassword(value)}
+                                editable={true}
+                                secureTextEntry
+                            />
+                        </View>
+                    </View>
+                    <View
+                        style={styles.inputContainer}
+                    >
+                        <Text style={styles.inputTitleContent}>Date or Birth</Text>
+                        <TouchableOpacity
+                            onPress={handleOnChangeStartDate}
+                            style={styles.inputContent}
+                        >
+                            <Text>{selectedStartDate}</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
@@ -182,18 +226,19 @@ const styles = StyleSheet.create({
     },
     inputTitleContent: {
         fontSize: 20,
-        fontWeight: 'bold',
-        
+        fontWeight: '500',
+        color: '#000'
     },
     inputContent: {
         height: 44,
         width: '100%',
-        borderColor: 'gray',
+        borderColor: '#E4E4E5',
         borderWidth: 1,
         borderRadius: 5,
         marginVertical: 6,
         justifyContent: 'center',
         paddingLeft: 5,
-        marginLeft: -10
+        marginLeft: -10,
+        marginBottom: 5
     },
 })
