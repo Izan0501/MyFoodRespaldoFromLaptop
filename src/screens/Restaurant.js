@@ -22,6 +22,7 @@ const Restaurant = ({ route, navigation }) => {
   const [currentLocation, setcurrentLocation] = React.useState(null);
   const [orderItems, setOrderItems] = React.useState([]);
 
+  const scrollX = new Animated.Value(0);
   const screenWidth = Dimensions.get("window").width;
 
   React.useEffect(() => {
@@ -101,17 +102,17 @@ const Restaurant = ({ route, navigation }) => {
 
   }
 
-    {
-      /**show the total price function */
-    }
+  {
+    /**show the total price function */
+  }
 
   function getTotalPrice() {
     let total = orderItems.reduce((a, b) => a + (b.total || 0), 0);
-  
+
     return total.toFixed(2)
   }
 
-  {/**render goBack arrow / function */}
+  {/**render goBack arrow / function */ }
 
   function renderHeader() {
     return (
@@ -155,6 +156,9 @@ const Restaurant = ({ route, navigation }) => {
         scrollEventThrottle={16}
         snapToAlignment={"center"}
         showsHorizontalScrollIndicator={false}
+        onScroll={Animated.event([
+          { nativeEvent: { contentOffset: { x: scrollX } } }
+        ], { useNativeDriver: false })}
       >
         {restaurants?.menu.map((item, index) => (
           <View key={`menu-${index}`} style={{ alignItems: "center" }}>
@@ -314,11 +318,64 @@ const Restaurant = ({ route, navigation }) => {
     )
   }
 
+  {/**render dots Navigation function */ }
+
+  function renderDots() {
+
+    const dotPosition = Animated.divide(scrollX, screenWidth)
+
+    return (
+      <View
+        style={{ height: 30 }}
+      >
+        <View style={styles.dotsContain}>
+          {restaurants?.menu.map((item, index) => {
+
+            const opacity = dotPosition.interpolate({
+              inputRange: [index - 1, index, index + 1],
+              outputRange: [0.3, 1, 0.3],
+              extrapolate: 'clamp'
+            })
+
+            const dotsSize = dotPosition.interpolate({
+              inputRange: [index - 1, index, index + 1],
+              outputRange: [8 * 0.8, 10, 8 * 0.8],
+              extrapolate: 'clamp'
+            })
+
+            const dotColor = dotPosition.interpolate({
+              inputRange: [index - 1, index, index + 1],
+              outputRange: ['#898C95', '#FC6D3F', '#898C95'],
+              extrapolate: 'clamp'
+            })
+
+            return (
+              <Animated.View
+                key={`dot-${index}`}
+                opacity={opacity}
+                style={{
+                  borderRadius: 30,
+                  marginHorizontal: 6,
+                  width: dotsSize,
+                  height: dotsSize,
+                  backgroundColor: dotColor
+                }}
+              />
+            )
+          })}
+        </View>
+      </View>
+    )
+  }
+
   {/*render order in the bottom of the screen*/ }
 
   function renderOrder() {
     return (
       <View>
+        {
+          renderDots()
+        }
         <View
           style={{
             backgroundColor: "#FFFFFF",
@@ -455,7 +512,6 @@ const Restaurant = ({ route, navigation }) => {
     )
   }
 
-
   return (
     <SafeAreaView style={styles.androidSafeArea}>
       {renderHeader()}
@@ -512,4 +568,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 1,
   },
+  dotsContain: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 10
+  }
 });
