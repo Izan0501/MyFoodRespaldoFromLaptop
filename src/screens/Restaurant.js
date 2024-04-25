@@ -174,7 +174,7 @@ const Restaurant = ({ route, navigation }) => {
                   borderRadius: 35,
                 }}
               />
-
+              {console.log(index)}
               {/**ProductQuantityButton */}
 
               <View

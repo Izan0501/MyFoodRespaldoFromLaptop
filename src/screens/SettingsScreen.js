@@ -96,7 +96,7 @@ const SettingsScreen = ({ navigation }) => {
 
   const listActionItems = [
 
-    { icon: 'outlined-flag', text: 'Report a problem', action: navigateToReportProblem },
+    { icon: 'outlined-flag', text: 'Report a problema',asd:0, action: navigateToReportProblem },
     { icon: 'help-outline', text: 'Add Account', action: addAccount },
     { icon: 'info-outline', text: 'Log Out', action: logout },
 
@@ -136,7 +136,7 @@ const SettingsScreen = ({ navigation }) => {
           <View
             style={{
               borderRadius: 12,
-              backgroundColor: '#E5E5E5'
+              backgroundColor: '#f9f9f9'
             }}
           >
 
@@ -177,7 +177,7 @@ const SettingsScreen = ({ navigation }) => {
           <View
             style={{
               borderRadius: 12,
-              backgroundColor:  '#E5E5E5'
+              backgroundColor:  '#f9f9f9' //'#E5E5E5'
             }}
           >
 
@@ -218,7 +218,7 @@ const SettingsScreen = ({ navigation }) => {
           <View
             style={{
               borderRadius: 12,
-              backgroundColor: '#E5E5E5'
+              backgroundColor: '#f9f9f9'
             }}
           >
             {/**render list Cache Items */}
@@ -258,7 +258,7 @@ const SettingsScreen = ({ navigation }) => {
           <View
             style={{
               borderRadius: 12,
-              backgroundColor: '#E5E5E5'
+              backgroundColor: '#f9f9f9'//'#F2F2F1'
             }}
           >
 

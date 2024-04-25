@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     ScrollView,
     Image,
-    TextInput
+    TextInput,
+    Modal
 } from 'react-native'
 
 import React from 'react'
@@ -17,22 +18,33 @@ import { avatarsImg, imagesDataUrl } from '../constants/avatars';
 import * as ImagePicker from 'expo-image-picker';
 import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 
-
 const Profile = ({ navigation }) => {
 
+    {/**returnToHome function */ }
+    const returnToHome = () => {
+        navigation.navigate('Restaurant')
+    };
+
+    {/**Profile Image Edit */ }
     const [selectedImage, setSelectedImage] = useState(avatarsImg[0]);
 
+    {/**Name User Edit  */ }
     const [name, setName] = useState("User");
 
+    {/**Name User Edit  */ }
     const [email, setEmail] = useState("UserName@gmail.com")
 
+    {/**Password User Edit */ }
     const [password, setPassword] = useState("RandomPassword");
 
+    {/**Location User*/ }
     const [country, setCountry] = useState("Argentina");
 
+    {/**Select User Age */ }
     const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
     const today = new Date();
-    const startDate = getFormatedDate (
+
+    const startDate = getFormatedDate(
         today.setDate(today.getDate() + 1),
         "YYYY/MM/DD"
     )
@@ -44,10 +56,11 @@ const Profile = ({ navigation }) => {
         setSatartedDate(propDate)
     }
 
-    const handleOnChangeStartDate = () => {
+    const handleOnPressStartDate = () => {
         setOpenStartDatePicker(!openStartDatePicker)
     }
 
+    {/**edit profile image function */ }
     const handleImageSelection = async () => {
 
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -65,9 +78,47 @@ const Profile = ({ navigation }) => {
 
     }
 
-    const returnToHome = () => {
-        navigation.navigate('Restaurant')
-    };
+    {/**function of render data picker for user */ }
+    function renderDatePicker() {
+        return (
+            <Modal
+                animationType='slide'
+                transparent={true}
+                visible={openStartDatePicker}
+            >
+                <View
+                    style={styles.modalContain}
+                >
+                    <View
+                        style={styles.modalContent}
+                    >
+                        <DatePicker
+                            mode='calendar'
+                            minimumDate={startDate}
+                            selected={startedDate}
+                            onDateChange={handleChangeStartDate}
+                            onSelectedChange={(date) => setSelectedStartDate(date)}
+                            options={{
+                                backgroundColor: '#242760',
+                                textHeaderColor: '#469ab6',
+                                textDefaultColor: 'white',
+                                selectedTextColor: 'red',
+                                mainColor: '#469ab6',
+                                textSecondaryColor: 'white',
+                                borderColor: 'rgba(122,146,165,01)'
+                            }}
+                        />
+
+                        <TouchableOpacity
+                            onPress={handleOnPressStartDate}
+                        >
+                            <Text style={{ color: 'white' }}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+        )
+    }
 
     return (
         <SafeAreaView
@@ -164,13 +215,31 @@ const Profile = ({ navigation }) => {
                     >
                         <Text style={styles.inputTitleContent}>Date or Birth</Text>
                         <TouchableOpacity
-                            onPress={handleOnChangeStartDate}
+                            onPress={handleOnPressStartDate}
                             style={styles.inputContent}
                         >
                             <Text>{selectedStartDate}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
+                <View
+                    style={styles.inputContainer}
+                >
+                    <Text style={styles.inputTitleContent}>Country</Text>
+                    <View style={styles.inputContent}>
+                        <TextInput
+                            cursorColor={'gray'}
+                            value={country}
+                            onChangeText={value => setCountry(value)}
+                            editable={true}
+                        />
+                    </View>
+                </View>
+
+                {
+                    renderDatePicker()
+                }
+
             </ScrollView>
         </SafeAreaView>
     )
@@ -241,4 +310,26 @@ const styles = StyleSheet.create({
         marginLeft: -10,
         marginBottom: 5
     },
+    modalContain: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    modalContent: {
+        margin: 20,
+        backgroundColor: '#242760',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 20,
+        padding: 35,
+        width: '90%',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            heght: 2,
+        },
+        shadowOpacity: 0.50,
+        shadowRadius: 4,
+        elevation: 5
+    }
 })
