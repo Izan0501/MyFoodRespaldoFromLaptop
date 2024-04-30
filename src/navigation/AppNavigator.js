@@ -16,6 +16,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import Svg, { Path } from 'react-native-svg'
 
 const Tab = createBottomTabNavigator();
 
@@ -67,7 +68,6 @@ const AppNavigator = () => {
                                     />
                                 </View>
                             )
-
                         }
                     }}
                 />
@@ -93,7 +93,6 @@ const AppNavigator = () => {
                                     />
                                 </View>
                             )
-
                         }
                     }}
                 />
@@ -119,15 +118,20 @@ const AppNavigator = () => {
                                     />
                                 </View>
                             )
-
                         }
                     }}
                 />
             </Tab.Navigator>
-        </NavigationContainer>
+        </NavigationContainer >
     );
 };
 
 export default AppNavigator
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    tabCustomBtn: {
+        flex: 1,
+        height: 60,
+        backgroundColor: 'white',
+    },
+})

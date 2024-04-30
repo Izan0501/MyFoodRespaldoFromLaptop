@@ -16,9 +16,9 @@ const restaurantData = [
             latitude: 1.5347282806345879,
             longitude: 110.35632207358996,
         },
-        courier: {
-            //avatar: images.//avatar_1,
-            name: "Amy"
+        deliveryMan: {
+            avatar: require('../assets/images/Avatar-1.png'),
+            name: "Alexander"
         },
         menu: [
             {
@@ -59,8 +59,8 @@ const restaurantData = [
             latitude: 1.556306570595712,
             longitude: 110.35504616746915,
         },
-        courier: {
-            //avatar: images.//avatar_2,
+        deliveryMan: {
+            avatar: require('../assets/images/Avatar-2.png'),
             name: "Jackson"
         },
         menu: [
@@ -110,8 +110,8 @@ const restaurantData = [
             latitude: 1.5238753474714375,
             longitude: 110.34261833833622,
         },
-        courier: {
-            //avatar: images.//avatar_3,
+        deliveryMan: {
+            avatar: require('../assets/images/Avatar-3.png'),
             name: "James"
         },
         menu: [
@@ -137,8 +137,8 @@ const restaurantData = [
             latitude: 1.5578068150528928,
             longitude: 110.35482523764315,
         },
-        courier: {
-            //avatar: images.//avatar_4,
+        deliveryMan: {
+            avatar: require('../assets/images/Avatar-4.png'),
             name: "Ahmad"
         },
         menu: [
@@ -164,8 +164,8 @@ const restaurantData = [
             latitude: 1.558050496260768,
             longitude: 110.34743759630511,
         },
-        courier: {
-            //avatar: images.//avatar_4,
+        deliveryMan: {
+            avatar: require('../assets/images/avatar-5.jpg'),
             name: "Muthu"
         },
         menu: [
@@ -217,8 +217,8 @@ const restaurantData = [
             latitude: 1.5573478487252896,
             longitude: 110.35568783282145,
         },
-        courier: {
-            //avatar: images.//avatar_1,
+        deliveryMan: {
+            avatar: require('../assets/images/Avatar-1.png'),
             name: "Jessie"
         },
         menu: [

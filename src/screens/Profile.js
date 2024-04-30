@@ -236,6 +236,20 @@ const Profile = ({ navigation }) => {
                     </View>
                 </View>
 
+                <TouchableOpacity
+                   style= {styles.saveButton}
+                >
+                    <Text
+                        style={{
+                            color: 'white',
+                            fontWeight: 'bold',
+                            fontSize:20
+                        }}
+                    >
+                        Save Changes
+                    </Text>
+                </TouchableOpacity>
+
                 {
                     renderDatePicker()
                 }
@@ -331,5 +345,15 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.50,
         shadowRadius: 4,
         elevation: 5
+    },
+    saveButton: {
+        backgroundColor: '#FC6D3F',
+        height: 44,
+        borderRadius: 6,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '75%',
+        marginLeft: 47.5,
+        marginTop: 7
     }
 })

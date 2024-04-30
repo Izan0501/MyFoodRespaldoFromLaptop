@@ -118,7 +118,7 @@ const SettingsScreen = ({ navigation }) => {
           <MaterialIcons
             name="keyboard-backspace"
             size={30}
-            color="#000"
+            color='#000'
             style={{
               marginLeft: 10.5,
               marginTop: 10,
@@ -156,7 +156,7 @@ const SettingsScreen = ({ navigation }) => {
                     <MaterialIcons
                       name={item.icon}
                       size={24}
-                      color={'black'}
+                      color={'#56008c'}
                     />
                     <Text
                       style={styles.listItemTxt}
@@ -197,7 +197,7 @@ const SettingsScreen = ({ navigation }) => {
                     <MaterialIcons
                       name={item.icon}
                       size={24}
-                      color={'#000'}
+                      color={'#56008c'}
                     />
                     <Text
                       style={styles.listItemTxt}
@@ -237,7 +237,7 @@ const SettingsScreen = ({ navigation }) => {
                     <MaterialIcons
                       name={item.icon}
                       size={24}
-                      color={'#000'}
+                      color={'#56008c'}
                     />
                     <Text
                       style={styles.listItemTxt}
@@ -278,7 +278,7 @@ const SettingsScreen = ({ navigation }) => {
                     <MaterialIcons
                       name={item.icon}
                       size={24}
-                      color={'#000'}
+                      color={'#56008c'}
                     />
                     <Text
                       style={styles.listItemTxt}
@@ -330,12 +330,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 8,
-    paddingLeft: 12
+    paddingLeft: 12,
   },
   listItemTxt: {
     marginLeft: 16,
     fontWeight: '600',
-    fontSize: 16
+    fontSize: 16,
+    color: '#000'
   },
   listAccountItemSectionTitle: {
     marginVertical: 10,

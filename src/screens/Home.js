@@ -141,7 +141,7 @@ const Home = () => {
                 style={{
                     marginBottom: 20,
                 }}
-                onPress={() => navigation.navigate('Restaurant', item) }
+                onPress={() => navigation.navigate('Restaurant', item)}
             >
                 <View
                     style={{
