@@ -15,8 +15,14 @@ import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import icons from "../constants/icons";
 import { Feather } from "@expo/vector-icons";
+import { Entypo } from '@expo/vector-icons';
+import { useDispatch, useSelector } from "react-redux";
+import { increment, decrement, reset  } from "../features/Counter/counterSlice";
 
 const Restaurant = ({ route, navigation }) => {
+
+  const count = useSelector(state => state.counterReducer.value);
+  const dispatch = useDispatch();
 
   const [restaurants, setRestaurants] = React.useState(null);
   const [currentLocation, setcurrentLocation] = React.useState(null);
@@ -24,6 +30,8 @@ const Restaurant = ({ route, navigation }) => {
 
   const scrollX = new Animated.Value(0);
   const screenWidth = Dimensions.get("window").width;
+
+  
 
   React.useEffect(() => {
     let item = route.params;
@@ -36,6 +44,8 @@ const Restaurant = ({ route, navigation }) => {
   {
     /**Function to edit product quantity (add and substract) */
   }
+
+  console.log(count);
 
   function editOrderProductsQuantity(action, menuId, price) {
 
@@ -100,6 +110,7 @@ const Restaurant = ({ route, navigation }) => {
 
     return itemCount
 
+
   }
 
   {
@@ -110,7 +121,9 @@ const Restaurant = ({ route, navigation }) => {
     let total = orderItems.reduce((a, b) => a + (b.total || 0), 0);
 
     return total.toFixed(2)
+
   }
+
 
   {/**render goBack arrow / function */ }
 
@@ -178,7 +191,7 @@ const Restaurant = ({ route, navigation }) => {
                   borderRadius: 35,
                 }}
               />
-              
+
               {/**ProductQuantityButton */}
 
               <View
@@ -192,7 +205,7 @@ const Restaurant = ({ route, navigation }) => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => editOrderProductsQuantity('-', item.menuId, item.price)}
+                  onPress={() => dispatch(decrement()) && editOrderProductsQuantity('-', item.menuId, item.price)}
                   style={{
                     width: 50,
                     backgroundColor: "white",
@@ -228,11 +241,11 @@ const Restaurant = ({ route, navigation }) => {
                       fontWeight: "bold",
                     }}
                   >
-                    {getOrderQuantity(item.menuId)}
+                    {count && getOrderQuantity(item.menuId)}
                   </Text>
                 </View>
                 <TouchableOpacity
-                  onPress={() => editOrderProductsQuantity('+', item.menuId, item.price)}
+                  onPress={() => dispatch(increment()) && editOrderProductsQuantity('+', item.menuId, item.price)}
                   style={{
                     width: 50,
                     backgroundColor: "white",
@@ -255,6 +268,31 @@ const Restaurant = ({ route, navigation }) => {
                 </TouchableOpacity>
               </View>
             </View>
+
+            {/**Delete cart products (Reset)*/}
+
+            <TouchableOpacity
+              style={{
+                width: screenWidth * 0.15,
+                padding: 10,
+                backgroundColor: '#f77f00',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 30,
+                top: 35,
+                marginLeft: 0,
+                marginBottom: 20,
+                ...styles.shadow
+              }}
+              onPress={()=> dispatch(reset())}
+            >
+              <View>
+                <Entypo 
+                name="trash" 
+                size={24} 
+                color="black" />
+              </View>
+            </TouchableOpacity>
 
             {/**name & desciption*/}
 
