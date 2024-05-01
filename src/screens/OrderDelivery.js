@@ -11,19 +11,19 @@ import {
 
 import { MaterialIcons } from "@expo/vector-icons";
 import React from 'react';
-//import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Feather } from "@expo/vector-icons";
 import icons from '../constants/icons';
 
 const screenWidth = Dimensions.get("window").width;
 
 
-/**const INITIAL_REGION = {
+const INITIAL_REGION = {
   latitude: -26.82,
   longitude: -65.22,
   latitudeDelta: 2,
   longitudeDelta: 2
-}*/
+}
 
 const OrderDelivery = ({ route, navigation }) => {
 
@@ -252,7 +252,7 @@ const OrderDelivery = ({ route, navigation }) => {
     <SafeAreaView>
       <View
       >
-        
+        {renderMap()}
         {renderDeliveryHeader()}
         {renderDeliveryInfo()}
         {renderMapZoomButtons()}
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
   deliveryHeaderContainer: {
     position: 'absolute',
     //bottom: 630,
-    top: 35,
+    top: 48,
     left: 0,
     right: 0,
     alignItems: 'center',
