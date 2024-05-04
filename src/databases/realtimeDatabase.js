@@ -1,1 +1,1 @@
-export const baseUrl = 'https://console.firebase.google.com/project/myfoodapp-edab3/database/myfoodapp-edab3-default-rtdb/data/~2F?hl=es'
+export const baseUrl = 'https://myfoofapp-1-default-rtdb.firebaseio.com/'

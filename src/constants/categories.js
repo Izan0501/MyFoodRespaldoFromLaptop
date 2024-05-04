@@ -6,7 +6,7 @@ const categories = [
   },
   {
     id: 2,
-    name: "Noodles",
+    name: "Flours",
     image: require('../assets/icons/noodle.png'),
   },
   {
@@ -42,14 +42,8 @@ const categories = [
   {
     id: 9,
     name: "Desserts",
-    image: require('../assets/icons/donut.png'),
-  },
-  {
-    id: 10,
-    name: "Drinks",
-    image: require('../assets/icons/drink.png'),
-  },
-
+    image: require('../assets/icons/donut.png')
+  }
 ];
 
 export default categories;

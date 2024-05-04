@@ -9,7 +9,7 @@ const restaurantData = [
         name: "Aloha Burgers",
         rating: 4.6,
         categories: [5, 7],
-        priceRating: affordable,
+        priceRating: 2,
         image: require('../assets/images/burger-restaurant.jpg'),
         duration: "30 - 45 min",
         location: {

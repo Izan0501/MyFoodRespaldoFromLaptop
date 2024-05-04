@@ -16,6 +16,7 @@ import categories from '../constants/categories';
 import restaurantData from '../constants/restaurants';
 import icons from '../constants/icons';
 import { useNavigation } from '@react-navigation/native';
+import { useGetCategoriesQuery } from "../services/shopServices";
 
 
 
@@ -25,6 +26,9 @@ const Home = () => {
     // Restaurant list & category list (data)
     const [restaurants, setRestaurants] = React.useState(restaurantData);
     const [selectedCategory, setSelectedCategory] = React.useState(null);
+    const {data: categories2, error, isLoading} = useGetCategoriesQuery();
+    
+    console.log(categories2);
 
 
     return (
@@ -50,8 +54,6 @@ const Home = () => {
         if (category.length > 0)
             return category[0].name
         return ''
-
-
     }
 
     function onSelectedCategory(category) {
