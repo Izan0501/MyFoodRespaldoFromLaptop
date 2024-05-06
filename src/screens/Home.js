@@ -12,55 +12,40 @@ import {
 import React from 'react';
 import Carousel from '../components/Carousel';
 import SearchBar from '../components/SearchBar';
-import categories from '../constants/categories';
+//import categories from '../constants/categories';
 import restaurantData from '../constants/restaurants';
 import icons from '../constants/icons';
-import { useNavigation } from '@react-navigation/native';
-import { useGetCategoriesQuery } from "../services/shopServices";
+//import { useNavigation } from '@react-navigation/native';
+import { useGetCategoriesQuery, useGetProductsByCategoryQuery } from "../services/shopServices";
 
+const Home = ({
+    navigation,
+    route
+}) => {
 
-
-const Home = () => {
-
-    const navigation = useNavigation()
     // Restaurant list & category list (data)
     const [restaurants, setRestaurants] = React.useState(restaurantData);
-    const [selectedCategory, setSelectedCategory] = React.useState(null);
-    const {data: categories2, error, isLoading} = useGetCategoriesQuery();
-    
-    console.log(categories2);
 
+    const [selectedCategory, setSelectedCategory ] = React.useState(null);
 
-    return (
+    const { data: categories, error } = useGetCategoriesQuery();
 
-        <SafeAreaView>
-            <View
-                style={{
-                    height: '100%'
-                }}>
-                <Carousel />
-                <SearchBar />
-                {renderCategories()}
-                {renderRestaurantList(navigation)}
-            </View>
-        </SafeAreaView>
+    const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(selectedCategory)
 
-    );
+    console.log(productsFetched);
+    console.log(errorFetched);
+    console.log(isLoading);
+
 
     // selectCategory function
-    function getCategoryNameById(id) {
-        let category = categories.filter(a => a.id === id)
-
-        if (category.length > 0)
-            return category[0].name
-        return ''
-    }
-
     function onSelectedCategory(category) {
+
         let restaurantList = restaurantData.filter(a => a.categories.includes(category.id))
 
         setRestaurants(restaurantList)
         setSelectedCategory(category)
+
+
     }
 
     //rendeder categories section
@@ -94,8 +79,8 @@ const Home = () => {
                         }}
                     >
                         <Image
-                            source={item.image}
-                            //resizeMode='contain'
+                            source={item.image[0]}
+                            resizeMode='contain'
                             style={{
                                 marginTop: 10,
                                 width: 30,
@@ -135,7 +120,7 @@ const Home = () => {
 
     //render Restaurant List mainMenu
     function renderRestaurantList() {
-        //console.log(itemIdSelected);
+
 
         const renderItem = ({ item }) => (
 
@@ -210,40 +195,13 @@ const Home = () => {
                         }}
                     >{item.rating}</Text>
 
-                    {/**Categories */}
+                    {/**Price Rating */}
                     <View
                         style={{
                             flexDirection: 'row',
                             marginLeft: 10
                         }}
                     >
-                        {
-                            item.categories.map((categoryId) => {
-                                return (
-                                    <View
-                                        style={{
-                                            flexDirection: 'row'
-                                        }}
-                                        key={categoryId}
-                                    >
-                                        <Text
-                                            style={{
-                                                fontWeight: '500'
-
-                                            }}
-                                        >{getCategoryNameById(categoryId)}</Text>
-                                        <Text
-                                            style={{
-                                                color: '#898C95',
-                                                lineHeight: 22,
-                                                fontSize: 20
-                                            }}
-                                        > . </Text>
-                                    </View>
-                                )
-                            })
-                        }
-                        {/**Price */}
                         {
                             [1, 2, 3].map((priceRating) => (
                                 <Text
@@ -279,6 +237,23 @@ const Home = () => {
         )
 
     }
+
+    //render Home Components
+    return (
+
+        <SafeAreaView>
+            <View
+                style={{
+                    height: '100%'
+                }}>
+                <Carousel />
+                <SearchBar />
+                {renderCategories()}
+                {renderRestaurantList(navigation)}
+            </View>
+        </SafeAreaView>
+
+    );
 
 }
 export default Home

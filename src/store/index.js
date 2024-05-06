@@ -3,7 +3,7 @@ import counterReducer from "../features/Counter/counterSlice";
 import shopReducer from "../features/Products/productsSlice";
 import { shopApi } from "../services/shopServices";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { useGetCategoriesQuery } from "../services/shopServices";
+
 
  const store = configureStore({
     reducer: {
