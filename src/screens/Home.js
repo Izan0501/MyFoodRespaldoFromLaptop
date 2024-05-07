@@ -17,6 +17,7 @@ import restaurantData from '../constants/restaurants';
 import icons from '../constants/icons';
 //import { useNavigation } from '@react-navigation/native';
 import { useGetCategoriesQuery, useGetProductsByCategoryQuery } from "../services/shopServices";
+import { setCategorySelected } from '../features/Products/productsSlice';
 
 const Home = ({
     navigation,
@@ -30,12 +31,12 @@ const Home = ({
 
     const { data: categories, error } = useGetCategoriesQuery();
 
-    const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(selectedCategory)
+    //const { category : categorySelected } = route.params
 
-    console.log(productsFetched);
-    console.log(errorFetched);
-    console.log(isLoading);
+   const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(selectedCategory);
 
+   console.log(isLoading);
+   console.log(productsFetched);
 
     // selectCategory function
     function onSelectedCategory(category) {
@@ -43,11 +44,12 @@ const Home = ({
         let restaurantList = restaurantData.filter(a => a.categories.includes(category.id))
 
         setRestaurants(restaurantList)
+
         setSelectedCategory(category)
 
-
     }
-
+     
+    console.log(selectedCategory);
     //rendeder categories section
 
     function renderCategories() {
@@ -79,7 +81,7 @@ const Home = ({
                         }}
                     >
                         <Image
-                            source={item.image[0]}
+                            source={{uri: item.image[0]}}
                             resizeMode='contain'
                             style={{
                                 marginTop: 10,
@@ -120,7 +122,6 @@ const Home = ({
 
     //render Restaurant List mainMenu
     function renderRestaurantList() {
-
 
         const renderItem = ({ item }) => (
 
@@ -166,6 +167,7 @@ const Home = ({
                 </View>
 
                 {/*restaurant-info*/}
+                
                 <Text style={{
                     fontSize: 20,
                     lineHeight: 30,
@@ -179,6 +181,7 @@ const Home = ({
                     }}
                 >
                     {/**Rating  */}
+
                     <Image
                         source={icons.star}
                         style={{
@@ -196,6 +199,7 @@ const Home = ({
                     >{item.rating}</Text>
 
                     {/**Price Rating */}
+
                     <View
                         style={{
                             flexDirection: 'row',
@@ -256,6 +260,7 @@ const Home = ({
     );
 
 }
+
 export default Home
 
 const styles = StyleSheet.create({
