@@ -17,7 +17,6 @@ import restaurantData from '../constants/restaurants';
 import icons from '../constants/icons';
 //import { useNavigation } from '@react-navigation/native';
 import { useGetCategoriesQuery, useGetProductsByCategoryQuery } from "../services/shopServices";
-import { setCategorySelected } from '../features/Products/productsSlice';
 
 const Home = ({
     navigation,
