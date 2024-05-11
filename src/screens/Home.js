@@ -12,10 +12,8 @@ import {
 import React from 'react';
 import Carousel from '../components/Carousel';
 import SearchBar from '../components/SearchBar';
-//import categories from '../constants/categories';
 import restaurantData from '../constants/restaurants';
 import icons from '../constants/icons';
-//import { useNavigation } from '@react-navigation/native';
 import { useGetCategoriesQuery, useGetProductsByCategoryQuery } from "../services/shopServices";
 
 const Home = ({
@@ -30,7 +28,7 @@ const Home = ({
 
     const { data: categories, error } = useGetCategoriesQuery();
 
-    const { data : categorySelected, error: errorFetch, isLoading } = useGetProductsByCategoryQuery(selectedCategory)
+    const { data : categorySelected, error: errorFetch, isLoading } = useGetProductsByCategoryQuery(categorySelected)
 
    //const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(categorySelected);
 
