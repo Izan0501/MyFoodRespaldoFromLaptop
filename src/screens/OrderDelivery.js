@@ -14,7 +14,6 @@ import React from 'react';
 //import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Feather } from "@expo/vector-icons";
 import icons from '../constants/icons';
-import { render } from 'react-native-web';
 
 const screenWidth = Dimensions.get("window").width;
 

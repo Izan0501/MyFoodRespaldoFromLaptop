@@ -30,12 +30,13 @@ const Home = ({
 
     const { data: categories, error } = useGetCategoriesQuery();
 
-    //const { category : categorySelected } = route.params
+    const { data : categorySelected, error: errorFetch, isLoading } = useGetProductsByCategoryQuery(selectedCategory)
 
-   const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(selectedCategory);
+   //const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(categorySelected);
 
    console.log(isLoading);
-   console.log(productsFetched);
+   //console.log(categories);
+   console.log(categorySelected);
 
     // selectCategory function
     function onSelectedCategory(category) {
@@ -48,7 +49,6 @@ const Home = ({
 
     }
      
-    console.log(selectedCategory);
     //rendeder categories section
 
     function renderCategories() {
@@ -80,7 +80,7 @@ const Home = ({
                         }}
                     >
                         <Image
-                            source={{uri: item.image[0]}}
+                            source={{ uri : item.image[0]}}
                             resizeMode='contain'
                             style={{
                                 marginTop: 10,
