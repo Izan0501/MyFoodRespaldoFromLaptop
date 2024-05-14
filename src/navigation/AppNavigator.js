@@ -39,7 +39,7 @@ const screenOptions = {
 const AppNavigator = () => {
 
     return (
-        <NavigationContainer>
+        /*<NavigationContainer>*/
             <Tab.Navigator
                 backBehavior='Main'
                 initialRouteName='Main'
@@ -122,7 +122,7 @@ const AppNavigator = () => {
                     }}
                 />
             </Tab.Navigator>
-        </NavigationContainer >
+        /*</NavigationContainer >*/
     );
 };
 

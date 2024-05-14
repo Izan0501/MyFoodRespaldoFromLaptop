@@ -68,7 +68,7 @@ export default Carousel;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
+    marginTop: 25,
     padding: 1,
   },
   searchIcon: {

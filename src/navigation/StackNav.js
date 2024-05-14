@@ -12,6 +12,7 @@ import {
 import EditProfile from '../screens/EditProfile';
 import SettingsScreen from '../screens/SettingsScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Login from '../screens/Login';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const StackNav = () => {
                 headerShown: false
             }}
         >
+
             <Stack.Screen name='Home' component={Home} />
             <Stack.Screen name='Restaurant' component={Restaurant} />
             <Stack.Screen name='Cart' component={Cart} />
@@ -31,6 +33,7 @@ const StackNav = () => {
             <Stack.Screen name='OrderDelivery' component={OrderDelivery} />
             <Stack.Screen name='SettingsScreen' component={SettingsScreen} />
             <Stack.Screen name='EditProfile' component={EditProfile} />
+            
         </Stack.Navigator>
     )
 };
