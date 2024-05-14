@@ -28,13 +28,13 @@ const Home = ({
 
     const { data: categories, error } = useGetCategoriesQuery();
 
-    const { data : categorySelected, error: errorFetch, isLoading } = useGetProductsByCategoryQuery(categorySelected)
+   // const { data : categorySelected, error: errorFetch, isLoading } = useGetProductsByCategoryQuery(categorySelected)
 
    //const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(categorySelected);
 
-   console.log(isLoading);
+   //console.log(isLoading);
    //console.log(categories);
-   console.log(categorySelected);
+   //console.log(categorySelected);
 
     // selectCategory function
     function onSelectedCategory(category) {

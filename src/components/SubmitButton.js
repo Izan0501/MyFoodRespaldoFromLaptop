@@ -25,8 +25,13 @@ export default SubmitButton;
 
 const styles = StyleSheet.create({
     container: {
+        position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
+        height: 70,
+        width: 140,
+        top: 630,
+        //backgroundColor: '#000'
     },
     text: {
         fontSize: 14,
@@ -36,12 +41,12 @@ const styles = StyleSheet.create({
     button: {
         position: 'absolute',
         width: '100%',
-        height: 55,
+        height: 65,
         borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
         width: 150,
-        top: 65,
+        //top: 90,
     },
 });
 

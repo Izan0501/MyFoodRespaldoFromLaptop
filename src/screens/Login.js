@@ -1,57 +1,56 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import { Text, TextInput, View, StyleSheet, Image, Pressable } from "react-native";
 import SubmitButton from "../components/SubmitButton";
-
+import InputForm from "../components/InputForm";
 
 const Login = ({
-  navigation,
-  label,
-  onChange,
-  error = '',
-  isSecure = false
+  navigation
 }) => {
 
-  const [input, setInput] = React.useState("");
-  const onChangeText = (text) => {
-    setInput(text)
-    onChange(text)
-  }
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
 
   return (
     <View style={styles.container}>
       <Image style={styles.backImg} source={require('../assets/background.png')} />
       <Image style={styles.lightImg} source={require('../assets/light.png')} />
       <Image style={styles.secondLightImg} source={require('../assets/light.png')} />
+
       <Text style={styles.title}>Hello</Text>
       <Text style={styles.subTitle}>Sign In to your account</Text>
-      <TextInput
-        placeholder="Example@gmail.com"
-        style={styles.textInput}
-        velue={input}
-        //onChangeText={onChangeText}
-        //onChange={() => {}}
-        error={""}
+
+      <InputForm
+        label="Example@gmail.com"
+        onChange={setEmail}
+        error={''}
       />
-      <TextInput
-        placeholder="Password"
-        style={styles.textInput}
-        //onChangeText={onChangeText}
-        //onChange={()=> {}}
-        secureTextEntry={isSecure = true}
+
+      <InputForm
+        label="Password"
+        onChange={setPassword}
+        error={''}
+        isSecure={true}
       />
+
       <Pressable
         style={{
+          position: 'absolute',
           backgroundColor: 'transparent',
-          height: 55
+          height: 55,
+          top: 570
         }}
         onPress={() => navigation.navigate('SignUp')}
       >
         <Text style={styles.signUpNav}>First time by the App?</Text>
       </Pressable>
+
       <SubmitButton onPress={() => { }} title={'Sign In'} />
+
       <Text style={styles.bottomWelcome}>Welcome to MyFoddApp</Text>
+
       <StatusBar style="light" />
+
     </View>
   );
 };
@@ -115,11 +114,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 14,
     color: 'gray',
-    marginTop: 30
+    //marginTop: 30
   },
   bottomWelcome: {
     position: 'absolute',
-    top: 800,
+    top: 730,
     fontWeight: 'bold',
     color: 'gray'
   },

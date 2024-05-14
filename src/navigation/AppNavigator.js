@@ -5,18 +5,13 @@ import {
 
 import {
     Profile,
-    Favs,
-    Cart
 } from '../screens';
 
 import SettingsScreen from '../screens/SettingsScreen';
 import StackNav from './StackNav';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import Svg, { Path } from 'react-native-svg'
 
 const Tab = createBottomTabNavigator();
 
