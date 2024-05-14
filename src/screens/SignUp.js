@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSignUpMutation } from "../services/authServices";
 import { setUser } from "../features/Users/userSlice";
+import { signupSchema } from "../validations/authSchema";
+import { err } from "react-native-svg";
 
 const SignUp = ({
   navigation
@@ -35,7 +37,15 @@ const SignUp = ({
   })
 
   const onSubmit = () => {
-    triggerSignUp({email, password, returnSecureToken: true})
+    try {
+      const validation = signupSchema.validateSync({email, password, confirmPassword})
+      triggerSignUp({email, password, returnSecureToken: true})
+    } catch (err) {
+      console.log('ERROR!!');
+      console.log(err.path);
+      console.log(err.message);
+    }
+    
   }
 
   return (

@@ -176,7 +176,7 @@ const Restaurant = ({ route, navigation }) => {
           <View key={`menu-${index}`} style={{ alignItems: "center" }}>
             <View
               style={{
-                height: "45%",
+                height: "55%",
               }}
             >
               <Image
@@ -272,7 +272,7 @@ const Restaurant = ({ route, navigation }) => {
 
             {/**Delete cart products (Reset)*/}
 
-            <TouchableOpacity
+            {/*<TouchableOpacity
               style={{
                 width: screenWidth * 0.15,
                 padding: 10,
@@ -293,7 +293,7 @@ const Restaurant = ({ route, navigation }) => {
                   size={24}
                   color="black" />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity>*/}
 
             {/**name & desciption*/}
 
@@ -566,7 +566,7 @@ const styles = StyleSheet.create({
   androidSafeArea: {
     flex: 1,
     backgroundColor: "white",
-    paddingTop: Platform.OS == "android" ? 40 : 0,
+    paddingTop: Platform.OS == "android" ? 10 : 0,
     haderButton: {
       width: 50,
       paddingLeft: 40,
