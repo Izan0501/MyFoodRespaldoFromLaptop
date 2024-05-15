@@ -1,15 +1,51 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, TextInput, View, StyleSheet, Image, Pressable } from "react-native";
 import SubmitButton from "../components/SubmitButton";
 import InputForm from "../components/InputForm";
+import { useSignInMutation } from "../services/authServices";
+import { setUser } from "../features/Users/userSlice";
+import { useDispatch } from "react-redux";
+import { signinSchema } from "../validations/authLoginShema";
 
-const Login = ({
-  navigation
-}) => {
+const Login = ({ navigation }) => {
 
+  const dispatch = useDispatch()
+  const [triggerSignIn, result] = useSignInMutation()
   const [email, setEmail] = useState()
+  const [errorMail, setErrorMail] = useState('')
   const [password, setPassword] = useState()
+  const [errorPassword, setErrorPassword] = useState('')
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      dispatch(
+        setUser({
+          email: result.data.email,
+          idToken: result.data.idToken
+        })
+      )
+    }
+  }, [result])
+
+  const onSubmit = () => {
+    try {
+      setErrorMail('')
+      setErrorPassword('')
+      const validation = signinSchema.validateSync({ email, password })
+      triggerSignIn({ email, password })
+    } catch (err) {
+      switch (err.path) {
+        case 'email':
+          setErrorMail(err.message)
+          break;
+        case 'password':
+          setErrorPassword(err.message)
+        default:
+          break;
+      }
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -23,13 +59,13 @@ const Login = ({
       <InputForm
         label="Example@gmail.com"
         onChange={setEmail}
-        error={''}
+        error={errorMail}
       />
 
       <InputForm
         label="Password"
         onChange={setPassword}
-        error={''}
+        error={errorPassword}
         isSecure={true}
       />
 
@@ -45,7 +81,7 @@ const Login = ({
         <Text style={styles.signUpNav}>First time by the App?</Text>
       </Pressable>
 
-      <SubmitButton onPress={() => { }} title={'Sign In'} />
+      <SubmitButton onPress={onSubmit} title={'Sign In'} />
 
       <Text style={styles.bottomWelcome}>Welcome to MyFoddApp</Text>
 
