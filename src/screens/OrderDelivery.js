@@ -6,17 +6,16 @@ import {
   Platform,
   TouchableOpacity,
   Dimensions,
-  Image
+  Image,
+  Modal
 } from 'react-native'
 
-import { MaterialIcons } from "@expo/vector-icons";
 import React from 'react';
-//import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { Feather } from "@expo/vector-icons";
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { Ionicons } from '@expo/vector-icons';
 import icons from '../constants/icons';
 
 const screenWidth = Dimensions.get("window").width;
-
 
 /*const INITIAL_REGION = {
   latitude: -26.82,
@@ -30,6 +29,55 @@ const OrderDelivery = ({ route, navigation }) => {
   const [restaurants, setRestaurants] = React.useState(null);
   const [streetName, setStreetName] = React.useState('')
 
+  {/**Handle Modal With The Order User */ }
+  const [openStartModal, setOpenModal] = React.useState(false);
+  const handleOnPressModal = () => {
+    setOpenModal(!openStartModal)
+  }
+
+
+  {/**function of render data picker for user */ }
+  function renderModalProducts() {
+    return (
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={openStartModal}
+      >
+        <View
+          style={styles.modalContain}
+        >
+          <View
+            style={styles.modalContent}
+          >
+            <TouchableOpacity
+              onPress={handleOnPressModal}
+            >
+              <Ionicons
+                style={styles.closeModal}
+                name="close-circle-outline"
+                size={30}
+                color="red"
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.deliveryBtn2}
+              onPress={handleOnPressModal}
+            >
+              <Text
+                style={styles.btnText}
+              >
+                Confirm Order
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    )
+  }
+
+
   React.useEffect(() => {
 
     let { restaurants, currentLocation } = route.params;
@@ -39,31 +87,30 @@ const OrderDelivery = ({ route, navigation }) => {
     setRestaurants(restaurants);
     setStreetName(street)
 
-
   })
 
   {/**zoomInFuncion */ }
 
   function zoomIn() {
-    {/**Function widh regions */}
+    {/**Function widh regions */ }
   }
 
-  function zoomOut(){
-    {/**Function Width Regions */}
+  function zoomOut() {
+    {/**Function Width Regions */ }
   }
 
   {/**Map delivery section  */ }
 
- /*function renderMap() {
+  function renderMap() {
     return (
       <MapView
         style={styles.map}
-        INITIAL_REGION={INITIAL_REGION}
+        //INITIAL_REGION={INITIAL_REGION}
         showsUserLocation
 
       />
     )
-  }*/
+  }
 
   {/**order delivery header info */ }
 
@@ -186,30 +233,23 @@ const OrderDelivery = ({ route, navigation }) => {
             </View>
           </View>
 
-          {/**Buttons */}
+          {/**Buttons Confirm & Show Order */}
 
           <View
             style={styles.deliveryBtnContainer}
           >
             <TouchableOpacity
               style={styles.deliveryBtn}
+              onPress={handleOnPressModal}
             >
               <Text
                 style={styles.btnText}
               >
-                Call
+                Your Order
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.deliveryBtn2}
-            >
-              <Text
-                style={styles.btnText}
-              >
-                Show Products
-              </Text>
-            </TouchableOpacity>
+
           </View>
         </View>
       </View >
@@ -252,10 +292,11 @@ const OrderDelivery = ({ route, navigation }) => {
     <SafeAreaView>
       <View
       >
-        
+        {renderMap()}
         {renderDeliveryHeader()}
         {renderDeliveryInfo()}
         {renderMapZoomButtons()}
+        {renderModalProducts()}
       </View>
     </SafeAreaView>
 
@@ -268,7 +309,7 @@ const styles = StyleSheet.create({
   androidSafeArea: {
     flex: 1,
     backgroundColor: "white",
-    paddingTop: Platform.OS == "android" ? 40 : 0,
+    paddingTop: Platform.OS == "android" ? 20 : 0,
     haderButton: {
       width: 50,
       paddingLeft: 40,
@@ -281,7 +322,6 @@ const styles = StyleSheet.create({
   },
   deliveryHeaderContainer: {
     position: 'absolute',
-    //bottom: 630,
     top: 48,
     left: 0,
     right: 0,
@@ -323,9 +363,10 @@ const styles = StyleSheet.create({
   },
   deliveryBtnContainer: {
     flexDirection: 'row',
-    marginTop: 20,
-    justifyContent: 'space-between',
-    marginLeft: -10
+    marginTop: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    //marginLeft: -10
   },
   deliveryBtn2: {
     height: 50,
@@ -342,7 +383,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    marginRight: 20,
+    //marginRight: 20,
   },
   btnText: {
     fontSize: 18,
@@ -371,4 +412,32 @@ const styles = StyleSheet.create({
     lineHeight: 36,
     fontWeight: '400'
   },
+  modalContain: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalContent: {
+    margin: 20,
+    backgroundColor: '#242760', //'#E5E5E5'
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    padding: 35,
+    width: '90%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      heght: 2,
+    },
+    shadowOpacity: 0.50,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  closeModal: {
+    position: 'relative',
+    top: -33,
+    left: 158
+
+  }
 })

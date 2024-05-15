@@ -14,7 +14,6 @@ import {
 import React from 'react'
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from 'react';
-import { avatarsImg, imagesDataUrl } from '../constants/avatars';
 import * as ImagePicker from 'expo-image-picker';
 import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 
@@ -25,8 +24,10 @@ const Profile = ({ navigation }) => {
         navigation.navigate('Restaurant')
     };
 
+    const defaultImageRoute = require('../assets/defaultProfile.png')
+
     {/**Profile Image Edit */ }
-    const [selectedImage, setSelectedImage] = useState(avatarsImg[0]);
+    const [selectedImage, setSelectedImage] = useState(defaultImageRoute);
 
     {/**Name User Edit  */ }
     const [name, setName] = useState("User");
@@ -39,26 +40,6 @@ const Profile = ({ navigation }) => {
 
     {/**Location User*/ }
     const [country, setCountry] = useState("Argentina");
-
-    {/**Select User Age */ }
-    const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
-    const today = new Date();
-
-    const startDate = getFormatedDate(
-        today.setDate(today.getDate() + 1),
-        "YYYY/MM/DD"
-    )
-
-    const [selectedStartDate, setSelectedStartDate] = useState('01/01/1990');
-    const [startedDate, setSatartedDate] = useState("12/12/2024");
-
-    const handleChangeStartDate = (propDate) => {
-        setSatartedDate(propDate)
-    }
-
-    const handleOnPressStartDate = () => {
-        setOpenStartDatePicker(!openStartDatePicker)
-    }
 
     {/**edit profile image function */ }
     const handleImageSelection = async () => {
@@ -76,48 +57,6 @@ const Profile = ({ navigation }) => {
             setSelectedImage(result.assets[0])
         }
 
-    }
-
-    {/**function of render data picker for user */ }
-    function renderDatePicker() {
-        return (
-            <Modal
-                animationType='slide'
-                transparent={true}
-                visible={openStartDatePicker}
-            >
-                <View
-                    style={styles.modalContain}
-                >
-                    <View
-                        style={styles.modalContent}
-                    >
-                        <DatePicker
-                            mode='calendar'
-                            minimumDate={startDate}
-                            selected={startedDate}
-                            onDateChange={handleChangeStartDate}
-                            onSelectedChange={(date) => setSelectedStartDate(date)}
-                            options={{
-                                backgroundColor: '#242760',
-                                textHeaderColor: '#469ab6',
-                                textDefaultColor: 'white',
-                                selectedTextColor: 'red',
-                                mainColor: '#469ab6',
-                                textSecondaryColor: 'white',
-                                borderColor: 'rgba(122,146,165,01)'
-                            }}
-                        />
-
-                        <TouchableOpacity
-                            onPress={handleOnPressStartDate}
-                        >
-                            <Text style={{ color: 'white' }}>Close</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
-        )
     }
 
     return (
@@ -210,17 +149,6 @@ const Profile = ({ navigation }) => {
                             />
                         </View>
                     </View>
-                    <View
-                        style={styles.inputContainer}
-                    >
-                        <Text style={styles.inputTitleContent}>Date or Birth</Text>
-                        <TouchableOpacity
-                            onPress={handleOnPressStartDate}
-                            style={styles.inputContent}
-                        >
-                            <Text>{selectedStartDate}</Text>
-                        </TouchableOpacity>
-                    </View>
                 </View>
                 <View
                     style={styles.inputContainer}
@@ -249,11 +177,6 @@ const Profile = ({ navigation }) => {
                         Save Changes
                     </Text>
                 </TouchableOpacity>
-
-                {
-                    renderDatePicker()
-                }
-
             </ScrollView>
         </SafeAreaView>
     )
@@ -265,7 +188,7 @@ const styles = StyleSheet.create({
     androidSafeArea: {
         flex: 1,
         backgroundColor: "white",
-        paddingTop: Platform.OS == "android" ? 40 : 0,
+        paddingTop: Platform.OS == "android" ? 20 : 0,
         haderButton: {
             width: 50,
             paddingLeft: 40,

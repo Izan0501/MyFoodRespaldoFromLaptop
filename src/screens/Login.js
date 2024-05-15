@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Text, TextInput, View, StyleSheet, Image, Pressable } from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet, Image, Pressable } from "react-native";
 import SubmitButton from "../components/SubmitButton";
 import InputForm from "../components/InputForm";
 import { useSignInMutation } from "../services/authServices";
 import { setUser } from "../features/Users/userSlice";
+import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from "react-redux";
 import { signinSchema } from "../validations/authLoginShema";
 
@@ -16,6 +17,7 @@ const Login = ({ navigation }) => {
   const [errorMail, setErrorMail] = useState('')
   const [password, setPassword] = useState()
   const [errorPassword, setErrorPassword] = useState('')
+  const [showPass, setShowPass] = useState(false)
 
   useEffect(() => {
     if (result.isSuccess) {
@@ -27,6 +29,11 @@ const Login = ({ navigation }) => {
       )
     }
   }, [result])
+
+  {/**Handle Password show-hide Content*/}
+  const onPressShowPass = () => {
+    setShowPass(!showPass)
+  }
 
   const onSubmit = () => {
     try {
@@ -61,13 +68,30 @@ const Login = ({ navigation }) => {
         onChange={setEmail}
         error={errorMail}
       />
-
-      <InputForm
-        label="Password"
-        onChange={setPassword}
-        error={errorPassword}
-        isSecure={true}
-      />
+      <View
+        style={styles.inputContainer}
+      >
+        <InputForm
+          label="Password"
+          onChange={setPassword}
+          error={errorPassword}
+          isSecure={showPass ? false : true}
+        />
+        <TouchableOpacity
+          onPress={onPressShowPass}
+          style={styles.seePass}
+        >
+          {showPass ? <Ionicons
+            name="eye"
+            size={24}
+            color="#14434D"
+          /> : <Ionicons
+            name="eye-off"
+            size={24}
+            color="#000"
+          />}
+        </TouchableOpacity>
+      </View>
 
       <Pressable
         style={{
@@ -94,6 +118,13 @@ const Login = ({ navigation }) => {
 export default Login
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+    borderColor: 'transparent'
+  },
   container: {
     flex: 1,
     backgroundColor: '#f1f1f1',
@@ -158,4 +189,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'gray'
   },
+  seePass: {
+    position: 'absolute',
+    top: 37,
+    right: 60
+  }
 });

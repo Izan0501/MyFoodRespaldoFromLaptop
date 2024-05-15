@@ -12,7 +12,6 @@ import {
 import EditProfile from '../screens/EditProfile';
 import SettingsScreen from '../screens/SettingsScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from '../screens/Login';
 
 const Stack = createNativeStackNavigator();
 

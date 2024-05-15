@@ -15,7 +15,7 @@ const SettingsScreen = ({ navigation }) => {
   {/**Navigation Function Section */ }
 
   const navigateToEditProfile = () => {
-    navigation.navigate('EditProfile')
+    navigation.navigate('Profile')
   };
 
   const navigateToSecurity = () => {
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
   androidSafeArea: {
     flex: 1,
     backgroundColor: "white",
-    paddingTop: Platform.OS == "android" ? 40 : 0,
+    paddingTop: Platform.OS == "android" ? 20 : 0,
     haderButton: {
       width: 50,
       paddingLeft: 40,

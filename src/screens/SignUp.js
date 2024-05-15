@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { Text, TextInput, View, StyleSheet, Image, Pressable } from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet, Image, Pressable } from "react-native";
 import SubmitButton from "../components/SubmitButton";
+import { Ionicons } from '@expo/vector-icons';
 import InputForm from "../components/InputForm";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -19,6 +20,8 @@ const SignUp = ({
   const [errorPassword, setErrorPassword] = useState("")
   const [confirmPassword, setconfirmPassword] = useState("");
   const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
 
   const dispatch = useDispatch()
 
@@ -34,6 +37,16 @@ const SignUp = ({
       )
     }
   })
+
+  {/**Handle Password show-hide Content */}
+  const onPressShowPass = () => {
+    setShowPass(!showPass)
+  }
+
+  {/**Handle confirmPassword show-hide Content */}
+  const onPressConfirmPass = () => {
+    setShowConfirmPass(!showConfirmPass)
+  }
 
   const onSubmit = () => {
     try {
@@ -73,19 +86,55 @@ const SignUp = ({
         error={errorMail}
       />
 
-      <InputForm
-        label="Password"
-        onChange={setPassword}
-        error={errorPassword}
-        isSecure={true}
-      />  
+      <View
+        style={styles.inputContainer}
+      >
+        <InputForm
+          label="Password"
+          onChange={setPassword}
+          error={errorPassword}
+          isSecure={showPass ? false : true}
+        />
+        <TouchableOpacity
+          onPress={onPressShowPass}
+          style={styles.seePass}
+        >
+          {showPass ? <Ionicons
+            name="eye"
+            size={24}
+            color="#14434D"
+          /> : <Ionicons
+            name="eye-off"
+            size={24}
+            color="#000"
+          />}
+        </TouchableOpacity>
+      </View>
 
-      <InputForm
-        label="Confirm Password"
-        onChange={setconfirmPassword}
-        error={errorConfirmPassword}
-        isSecure={true}
-      />
+      <View
+        style={styles.inputContainer}
+      >
+        <InputForm
+          label="Confirm Password"
+          onChange={setconfirmPassword}
+          error={errorConfirmPassword}
+          isSecure={showConfirmPass ? false : true }
+        />
+        <TouchableOpacity
+          onPress={onPressConfirmPass}
+          style={styles.seePass}
+        >
+          {showConfirmPass ? <Ionicons
+            name="eye"
+            size={24}
+            color="#14434D"
+          /> : <Ionicons
+            name="eye-off"
+            size={24}
+            color="#000"
+          />}
+        </TouchableOpacity>
+      </View>
 
       <Pressable
         style={{
@@ -169,4 +218,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'gray'
   },
+  inputContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+    borderColor: 'transparent'
+  },
+  seePass: {
+    position: 'absolute',
+    top: 37,
+    right: 60
+  }
 });

@@ -6,7 +6,8 @@ import {
     SafeAreaView,
     TouchableOpacity,
     Image,
-    Pressable
+    Pressable,
+    Platform
 } from 'react-native'
 
 import React from 'react';
@@ -24,17 +25,17 @@ const Home = ({
     // Restaurant list & category list (data)
     const [restaurants, setRestaurants] = React.useState(restaurantData);
 
-    const [selectedCategory, setSelectedCategory ] = React.useState(null);
+    const [selectedCategory, setSelectedCategory] = React.useState(null);
 
     const { data: categories, error } = useGetCategoriesQuery();
 
-   // const { data : categorySelected, error: errorFetch, isLoading } = useGetProductsByCategoryQuery(categorySelected)
+    // const { data : categorySelected, error: errorFetch, isLoading } = useGetProductsByCategoryQuery(categorySelected)
 
-   //const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(categorySelected);
+    //const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(categorySelected);
 
-   //console.log(isLoading);
-   //console.log(categories);
-   //console.log(categorySelected);
+    //console.log(isLoading);
+    //console.log(categories);
+    //console.log(categorySelected);
 
     // selectCategory function
     function onSelectedCategory(category) {
@@ -46,7 +47,7 @@ const Home = ({
         setSelectedCategory(category)
 
     }
-     
+
     //rendeder categories section
 
     function renderCategories() {
@@ -78,7 +79,7 @@ const Home = ({
                         }}
                     >
                         <Image
-                            source={{ uri : item.image[0]}}
+                            source={{ uri: item.image[0] }}
                             resizeMode='contain'
                             style={{
                                 marginTop: 10,
@@ -164,7 +165,7 @@ const Home = ({
                 </View>
 
                 {/*restaurant-info*/}
-                
+
                 <Text style={{
                     fontSize: 20,
                     lineHeight: 30,
@@ -242,7 +243,7 @@ const Home = ({
     //render Home Components
     return (
 
-        <SafeAreaView>
+        <SafeAreaView style={styles.androidSafeArea}>
             <View
                 style={{
                     height: '100%'
@@ -261,6 +262,16 @@ const Home = ({
 export default Home
 
 const styles = StyleSheet.create({
+    androidSafeArea: {
+        flex: 1,
+        backgroundColor: "white",
+        paddingTop: Platform.OS == "android" ? -0 : 0,
+        haderButton: {
+            width: 50,
+            paddingLeft: 40,
+            justifyContent: "center",
+        },
+    },
     shadow: {
         shadowColor: "#000",
         shadowOffset: {
