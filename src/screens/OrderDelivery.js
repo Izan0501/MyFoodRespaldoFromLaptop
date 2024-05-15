@@ -51,10 +51,10 @@ const OrderDelivery = ({ route, navigation }) => {
             style={styles.modalContent}
           >
             <TouchableOpacity
+              style={styles.closeModal}
               onPress={handleOnPressModal}
             >
               <Ionicons
-                style={styles.closeModal}
                 name="close-circle-outline"
                 size={30}
                 color="red"
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
   closeModal: {
     position: 'relative',
     top: -33,
-    left: 158
+    left: 155
 
   }
 })

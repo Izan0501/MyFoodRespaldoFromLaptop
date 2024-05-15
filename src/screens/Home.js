@@ -126,6 +126,7 @@ const Home = ({
             <TouchableOpacity
                 style={{
                     marginBottom: 20,
+                    ...styles.shadow
                 }}
                 onPress={() => navigation.navigate('Restaurant', item)}
             >
@@ -264,7 +265,7 @@ export default Home
 const styles = StyleSheet.create({
     androidSafeArea: {
         flex: 1,
-        backgroundColor: "white",
+        backgroundColor: '#F1f1f1',
         paddingTop: Platform.OS == "android" ? -0 : 0,
         haderButton: {
             width: 50,
