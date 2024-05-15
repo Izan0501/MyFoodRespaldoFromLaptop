@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { useSignUpMutation } from "../services/authServices";
 import { setUser } from "../features/Users/userSlice";
 import { signupSchema } from "../validations/authSchema";
-import { err } from "react-native-svg";
 
 const SignUp = ({
   navigation
@@ -25,7 +24,7 @@ const SignUp = ({
 
   const [triggerSignUp, result] = useSignUpMutation()
 
-  useEffect(()=> {
+  useEffect(() => {
     if (result.isSuccess) {
       dispatch(
         setUser({
@@ -38,14 +37,25 @@ const SignUp = ({
 
   const onSubmit = () => {
     try {
-      const validation = signupSchema.validateSync({email, password, confirmPassword})
-      triggerSignUp({email, password, returnSecureToken: true})
+      setErrorMail('')
+      setErrorPassword('')
+      setErrorConfirmPassword('')
+      const validation = signupSchema.validateSync({ email, password, confirmPassword })
+      triggerSignUp({ email, password, returnSecureToken: true })
     } catch (err) {
-      console.log('ERROR!!');
-      console.log(err.path);
-      console.log(err.message);
+      switch (err.path) {
+        case 'email':
+          setErrorMail(err.message)
+          break;
+        case 'password':
+          setErrorPassword(err.message)
+        case 'confirmPassword':
+          setErrorConfirmPassword(err.message)
+        default:
+          break;
+      }
     }
-    
+
   }
 
   return (
@@ -68,7 +78,7 @@ const SignUp = ({
         onChange={setPassword}
         error={errorPassword}
         isSecure={true}
-      />
+      />  
 
       <InputForm
         label="Confirm Password"
@@ -112,17 +122,14 @@ const styles = StyleSheet.create({
     fontSize: 80,
     color: '#34434D',
     fontWeight: 'bold',
-    //paddingBottom: 100
   },
   subTitle: {
     marginStart: -190,
     fontSize: 17,
     color: 'gray',
     fontWeight: 'bold',
-    //paddingBottom: 300
   },
   textInput: {
-    //flex :1,
     borderWidth: 1,
     borderColor: 'transparent',
     paddingStart: 20,
@@ -143,8 +150,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -15,
     right: 95,
-    //color: '#fff',
-    //flex : 1,
   },
   secondLightImg: {
     position: 'absolute',
@@ -157,7 +162,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 14,
     color: 'gray',
-    //marginTop: 40,
   },
   bottomWelcome: {
     position: 'absolute',
