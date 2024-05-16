@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 import React from 'react';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+//import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import icons from '../constants/icons';
 
@@ -101,7 +101,7 @@ const OrderDelivery = ({ route, navigation }) => {
 
   {/**Map delivery section  */ }
 
-  function renderMap() {
+  /*function renderMap() {
     return (
       <MapView
         style={styles.map}
@@ -110,7 +110,7 @@ const OrderDelivery = ({ route, navigation }) => {
 
       />
     )
-  }
+  }*/
 
   {/**order delivery header info */ }
 
@@ -292,7 +292,7 @@ const OrderDelivery = ({ route, navigation }) => {
     <SafeAreaView>
       <View
       >
-        {renderMap()}
+
         {renderDeliveryHeader()}
         {renderDeliveryInfo()}
         {renderMapZoomButtons()}

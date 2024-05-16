@@ -180,7 +180,7 @@ const Restaurant = ({ route, navigation }) => {
               }}
             >
               <Image
-                source={item.image}
+                source={{ uri: item.image }}
                 resizeMod="cover"
                 style={{
                   marginRight: 4,

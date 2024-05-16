@@ -15,7 +15,7 @@ import Carousel from '../components/Carousel';
 import SearchBar from '../components/SearchBar';
 import restaurantData from '../constants/restaurants';
 import icons from '../constants/icons';
-import { useGetCategoriesQuery, useGetProductsByCategoryQuery } from "../services/shopServices";
+import { useGetCategoriesQuery, useGetProductsByCategoryQuery, useGetProductsByIdQuery } from "../services/shopServices";
 
 const Home = ({
     navigation,
@@ -23,26 +23,24 @@ const Home = ({
 }) => {
 
     // Restaurant list & category list (data)
-    const [restaurants, setRestaurants] = React.useState(restaurantData);
+
+    //const category = useSelector(state => state.shopReducer.value.categorySelected)
+
+    const [restaurants, setRestaurants] = React.useState();
 
     const [selectedCategory, setSelectedCategory] = React.useState(null);
 
     const { data: categories, error } = useGetCategoriesQuery();
 
-    // const { data : categorySelected, error: errorFetch, isLoading } = useGetProductsByCategoryQuery(categorySelected)
-
-    //const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(categorySelected);
+    const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(selectedCategory);
 
     //console.log(isLoading);
-    //console.log(categories);
+    console.log(productsFetched);
+    console.log(selectedCategory);
     //console.log(categorySelected);
 
     // selectCategory function
     function onSelectedCategory(category) {
-
-        let restaurantList = restaurantData.filter(a => a.categories.includes(category.id))
-
-        setRestaurants(restaurantList)
 
         setSelectedCategory(category)
 
@@ -109,7 +107,7 @@ const Home = ({
                     data={categories}
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    keyExtractor={item => `${item.id}`}
+                    keyExtractor={(category) => `${category.id}`}
                     renderItem={renderItem}
                     contentContainerStyle={{ paddingVertical: 20 }}
                 />
@@ -135,7 +133,7 @@ const Home = ({
                         marginBottom: 10,
                     }}>
                     <Image
-                        source={item.image}
+                        source={{ uri: item.image }}
                         resizeMode='cover'
                         style={{
                             width: '100%',
@@ -229,8 +227,8 @@ const Home = ({
         return (
             <FlatList
                 showsVerticalScrollIndicator={false}
-                data={restaurants}
-                keyExtractor={item => `${item.id}`}
+                data={productsFetched}
+                keyExtractor={(category) => `${category.id}`}
                 renderItem={renderItem} setItemIdSelected
                 contentContainerStyle={{
                     paddingHorizontal: 20,
