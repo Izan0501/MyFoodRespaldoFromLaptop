@@ -13,7 +13,7 @@ import {
 import React from 'react';
 import Carousel from '../components/Carousel';
 import SearchBar from '../components/SearchBar';
-import { setCategorySelected } from '../features/Products/productsSlice';
+import { setCategorySelected, setIdSelected } from '../features/Products/productsSlice';
 import icons from '../constants/icons';
 import { useGetCategoriesQuery, useGetProductsByCategoryQuery, useGetProductsByIdQuery } from "../services/shopServices";
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,9 +25,10 @@ const Home = ({
 
     // Restaurant list & category list (data)
 
-    const categorySelected = useSelector(state => state.shopReducer.value)
+    const categorySelected = useSelector(state => state.shopReducer.value.categorySelected)
+    const itemIdSelected = useSelector(state => state.shopReducer.value.itemIdSelected)
 
-    const [restaurants, setRestaurants] = React.useState();
+    const [restaurants, setRestaurants] = React.useState(null);
 
     const [selectedCategory, setSelectedCategory] = React.useState(null);
 
@@ -39,19 +40,17 @@ const Home = ({
 
     console.log(categorySelected);
     console.log(productsFetched);
-    // console.log(isLoading);
-    // console.log(productsFetched);
-    // console.log(setCategorySelected);
+    //console.log(selectedCategory);
 
 
     // selectCategory function
     function onSelectedCategory(category) {
 
-        // setSelectedCategory(category)
-        dispatch(setCategorySelected(category))
+        console.log(category);
+
         setSelectedCategory(category)
-        
-        
+        dispatch(setCategorySelected(category))
+
     }
 
     //rendeder categories section
@@ -139,7 +138,7 @@ const Home = ({
                         marginBottom: 10,
                     }}>
                     <Image
-                        source={{ uri: item.category.image }}
+                        source={{ uri: item.image }}
                         resizeMode='cover'
                         style={{
                             width: '100%',
@@ -165,7 +164,7 @@ const Home = ({
                                 color: '#000',
                                 fontSize: 16.5
                             }}
-                        >{item.category.duration}</Text>
+                        >{item.duration}</Text>
                     </View>
                 </View>
 
@@ -175,7 +174,7 @@ const Home = ({
                     fontSize: 20,
                     lineHeight: 30,
                     fontWeight: 'bold'
-                }}>{item.category.name}</Text>
+                }}>{item.name}</Text>
 
                 <View
                     style={{
@@ -199,7 +198,7 @@ const Home = ({
                             fontWeight: '600',
                             marginBottom: 10
                         }}
-                    >{item.category.rating}</Text>
+                    >{item.rating}</Text>
 
                     {/**Price Rating */}
 
@@ -216,7 +215,7 @@ const Home = ({
                                     style={{
                                         marginTop: -5,
                                         lineHeight: 22,
-                                        color: (priceRating <= item.category.priceRating) ?
+                                        color: (priceRating <= item.priceRating) ?
                                             '#000' : '#898C95',
                                         fontSize: 14,
                                         fontWeight: '600'
@@ -234,8 +233,8 @@ const Home = ({
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={productsFetched}
-                // keyExtractor={(category) => `${category.id}`}
-                renderItem={renderItem} 
+                keyExtractor={(item) => item.categoryId}
+                renderItem={renderItem}
                 contentContainerStyle={{
                     paddingHorizontal: 20,
                     paddingBottom: 30,

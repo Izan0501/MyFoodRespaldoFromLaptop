@@ -143,7 +143,7 @@ const Restaurant = ({ route, navigation }) => {
 
         <View style={styles.contain}>
           <View style={styles.titleRestaurantContain}>
-            <Text style={styles.txtTitle}>{restaurants?.category.name}</Text>
+            <Text style={styles.txtTitle}>{restaurants?.name}</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.iconList}>
@@ -170,7 +170,7 @@ const Restaurant = ({ route, navigation }) => {
           { nativeEvent: { contentOffset: { x: scrollX } } }
         ], { useNativeDriver: false })}
       >
-        {restaurants?.category.menu.map((item, index) => (
+        {restaurants?.menu.map((item, index) => (
           <View key={`menu-${index}`} style={{ alignItems: "center" }}>
             <View
               style={{
@@ -366,7 +366,7 @@ const Restaurant = ({ route, navigation }) => {
         style={{ height: 30 }}
       >
         <View style={styles.dotsContain}>
-          {restaurants?.category.menu.map((item, index) => {
+          {restaurants?.menu.map((item, index) => {
 
             const opacity = dotPosition.interpolate({
               inputRange: [index - 1, index, index + 1],
