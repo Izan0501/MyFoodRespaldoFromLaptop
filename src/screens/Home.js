@@ -25,8 +25,8 @@ const Home = ({
 
     // Restaurant list & category list (data)
 
-    const categorySelected = useSelector(state => state.shopReducer.value.categorySelected)
-    const itemIdSelected = useSelector(state => state.shopReducer.value.itemIdSelected)
+    const categorySelected = useSelector(state => state.shopReducer.value)
+    // const itemIdSelected = useSelector(state => state.shopReducer.value.itemIdSelected)
 
     const [restaurants, setRestaurants] = React.useState(null);
 
@@ -39,19 +39,23 @@ const Home = ({
     const dispatch = useDispatch()
 
     console.log(categorySelected);
-    console.log(productsFetched);
+    // console.log(productsFetched);
     //console.log(selectedCategory);
-
 
     // selectCategory function
     function onSelectedCategory(category) {
 
-        console.log(category);
+        const restaurantList = productsFetched.filter(a => a.categoryId == (category.id)
+            || a.categoryId == (category.idRes)
+            || a.categoryId == (category.idResTwo)
+        )
 
         setSelectedCategory(category)
         dispatch(setCategorySelected(category))
-
+        setRestaurants(restaurantList);
     }
+
+    console.log(restaurants);
 
     //rendeder categories section
     function renderCategories() {
@@ -232,7 +236,8 @@ const Home = ({
         return (
             <FlatList
                 showsVerticalScrollIndicator={false}
-                data={productsFetched}
+                data={(restaurants === null) ?
+                    productsFetched : restaurants}
                 keyExtractor={(item) => item.categoryId}
                 renderItem={renderItem}
                 contentContainerStyle={{
