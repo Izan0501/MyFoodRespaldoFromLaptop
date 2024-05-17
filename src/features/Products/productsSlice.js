@@ -15,7 +15,7 @@ const productsSlice = createSlice({
         setIdSelected : (state, action) => {
             state.value.itemIdSelected = action.payload 
         }
-    }
+    },
 })
 
 export const {setCategorySelected, setIdSelected} = productsSlice.actions

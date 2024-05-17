@@ -14,14 +14,13 @@ import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import icons from "../constants/icons";
 import { Feather } from "@expo/vector-icons";
-import { Entypo } from '@expo/vector-icons';
 import { useDispatch, useSelector } from "react-redux";
 import { increment, decrement, reset } from "../features/Counter/counterSlice";
 
 const Restaurant = ({ route, navigation }) => {
 
   const count = useSelector(state => state.counterReducer.value);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
 
   const [restaurants, setRestaurants] = React.useState(null);
   const [currentLocation, setcurrentLocation] = React.useState(null);
@@ -44,7 +43,6 @@ const Restaurant = ({ route, navigation }) => {
     /**Function to edit product quantity (add and substract) */
   }
 
-  //console.log(count);
 
   function editOrderProductsQuantity(action, menuId, price) {
 
@@ -145,7 +143,7 @@ const Restaurant = ({ route, navigation }) => {
 
         <View style={styles.contain}>
           <View style={styles.titleRestaurantContain}>
-            <Text style={styles.txtTitle}>{restaurants?.name}</Text>
+            <Text style={styles.txtTitle}>{restaurants?.category.name}</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.iconList}>
@@ -172,7 +170,7 @@ const Restaurant = ({ route, navigation }) => {
           { nativeEvent: { contentOffset: { x: scrollX } } }
         ], { useNativeDriver: false })}
       >
-        {restaurants?.menu.map((item, index) => (
+        {restaurants?.category.menu.map((item, index) => (
           <View key={`menu-${index}`} style={{ alignItems: "center" }}>
             <View
               style={{
@@ -325,7 +323,7 @@ const Restaurant = ({ route, navigation }) => {
               </Text>
             </View>
 
-            {/**caloriesInfo */}
+            {/**caloriesInfo*/}
 
             <View
               style={{
@@ -368,7 +366,7 @@ const Restaurant = ({ route, navigation }) => {
         style={{ height: 30 }}
       >
         <View style={styles.dotsContain}>
-          {restaurants?.menu.map((item, index) => {
+          {restaurants?.category.menu.map((item, index) => {
 
             const opacity = dotPosition.interpolate({
               inputRange: [index - 1, index, index + 1],
