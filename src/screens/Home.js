@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     Image,
     Pressable,
-    Platform
+    Platform,
 } from 'react-native'
 
 import React from 'react';
@@ -17,28 +17,49 @@ import { setCategorySelected, setIdSelected } from '../features/Products/product
 import icons from '../constants/icons';
 import { useGetCategoriesQuery, useGetProductsByCategoryQuery, useGetProductsByIdQuery } from "../services/shopServices";
 import { useDispatch, useSelector } from 'react-redux';
+import { ActivityIndicator } from 'react-native';
 
 const Home = ({
     navigation,
     route
 }) => {
 
-    // Restaurant list & category list (data)
+    
 
+    //Save category on redux store
     const categorySelected = useSelector(state => state.shopReducer.value)
     // const itemIdSelected = useSelector(state => state.shopReducer.value.itemIdSelected)
 
+    //Restaurants filtered
     const [restaurants, setRestaurants] = React.useState(null);
-
+    
+    //save category
     const [selectedCategory, setSelectedCategory] = React.useState(null);
 
+    const dispatch = useDispatch()
+
+    // Restaurant list & category list (data)
     const { data: categories, error } = useGetCategoriesQuery();
 
     const { data: productsFetched, error: errorFetched, isLoading } = useGetProductsByCategoryQuery(categorySelected);
 
-    const dispatch = useDispatch()
+    //Loading Spinner 
+    if (isLoading === true) {
+        return (
+            <View
+                style={styles.IndicatorContainer}
+            >
+                <ActivityIndicator 
+                    size={'large'}
+                    color={'orange'}    
+                />
+            </View>
+        )
+    }
 
     console.log(categorySelected);
+    console.log(restaurants);
+
     // console.log(productsFetched);
     //console.log(selectedCategory);
 
@@ -54,8 +75,6 @@ const Home = ({
         dispatch(setCategorySelected(category))
         setRestaurants(restaurantList);
     }
-
-    console.log(restaurants);
 
     //rendeder categories section
     function renderCategories() {
@@ -288,5 +307,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 1,
+    },
+    IndicatorContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10,
     }
 })
