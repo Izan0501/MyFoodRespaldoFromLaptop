@@ -60,9 +60,6 @@ const Home = ({
     console.log(categorySelected);
     console.log(restaurants);
 
-    // console.log(productsFetched);
-    //console.log(selectedCategory);
-
     // selectCategory function
     function onSelectedCategory(category) {
 
