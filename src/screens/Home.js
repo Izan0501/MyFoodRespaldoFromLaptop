@@ -24,15 +24,12 @@ const Home = ({
     route
 }) => {
 
-    
-
     //Save category on redux store
     const categorySelected = useSelector(state => state.shopReducer.value)
-    // const itemIdSelected = useSelector(state => state.shopReducer.value.itemIdSelected)
 
     //Restaurants filtered
     const [restaurants, setRestaurants] = React.useState(null);
-    
+
     //save category
     const [selectedCategory, setSelectedCategory] = React.useState(null);
 
@@ -49,19 +46,47 @@ const Home = ({
             <View
                 style={styles.IndicatorContainer}
             >
-                <ActivityIndicator 
+                <ActivityIndicator
                     size={'large'}
-                    color={'orange'}    
+                    color={'orange'}
                 />
             </View>
         )
     }
 
-    console.log(categorySelected);
-    console.log(restaurants);
+    {/*Getting Error Bad Request // shopServices*/ }
+    if (errorFetched?.status === 400) {
+        return (
+            <View
+                style={styles.ErrorContainer}
+            >
+                <ActivityIndicator
+                    size={'large'}
+                    color={'orange'}
+                />
+                <View
+                    style={{
+                        marginTop: 15,
+                        paddingBottom: 10
+                    }}
+                >
+                    <Text
+                        style={{
+                            marginTop: 15,
+                            paddingBottom: 45,
+                            color: 'orange',
+                            fontSize: 20,
+                        }}
+                    >
+                        Error getting restaurants
+                    </Text>
+                </View>
+            </View>
+        )
+    } 
 
-    // selectCategory function
-    function onSelectedCategory(category) {
+     // selectCategory function
+     function onSelectedCategory(category) {
 
         const restaurantList = productsFetched.filter(a => a.categoryId == (category.id)
             || a.categoryId == (category.idRes)
@@ -254,7 +279,7 @@ const Home = ({
                 showsVerticalScrollIndicator={false}
                 data={(restaurants === null) ?
                     productsFetched : restaurants}
-                keyExtractor={(item) => item.categoryId}
+                keyExtractor={(item) => item.id}
                 renderItem={renderItem}
                 contentContainerStyle={{
                     paddingHorizontal: 20,
@@ -281,7 +306,7 @@ const Home = ({
     );
 
 }
-
+    
 export default Home
 
 const styles = StyleSheet.create({
@@ -310,5 +335,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         padding: 10,
+    },
+    ErrorContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+        marginBottom: 20
     }
 })

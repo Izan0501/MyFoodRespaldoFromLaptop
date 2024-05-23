@@ -7,7 +7,8 @@ import {
   View,
   Image,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
+  ActivityIndicator
 } from "react-native";
 
 import React from "react";
@@ -16,36 +17,58 @@ import icons from "../constants/icons";
 import { Feather } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { increment, decrement, reset } from "../features/Counter/counterSlice";
+import { setIdSelected } from "../features/Products/productsSlice";
+import { useGetProductsByIdQuery } from "../services/shopServices";
+import COLORS from "../constants/colors";
 
 const Restaurant = ({ route, navigation }) => {
 
   const count = useSelector(state => state.counterReducer.value);
-  const dispatch = useDispatch(); 
+  const itemIdSelected = useSelector(state => state.shopReducer.value.itemIdSelected);
+  const dispatch = useDispatch();
 
   const [restaurants, setRestaurants] = React.useState(null);
   const [currentLocation, setcurrentLocation] = React.useState(null);
   const [orderItems, setOrderItems] = React.useState([]);
-
   const scrollX = new Animated.Value(0);
   const screenWidth = Dimensions.get("window").width;
 
-
+  const { data, error, isLoading } = useGetProductsByIdQuery(itemIdSelected)
 
   React.useEffect(() => {
     let item = route.params;
     let currentLocation = route.params;
 
+
+    menuSelected(item)
     setRestaurants(item);
     setcurrentLocation(currentLocation);
-  });
+  })
+
+  if (isLoading === true) {
+    return (
+      <View
+        style={styles.IndicatorContainer}
+      >
+        <ActivityIndicator
+          size={'large'}
+          color={'orange'}
+        />
+      </View>
+    )
+  }
+
+  function menuSelected(item, image) {
+    let menu = item.menu
+
+    dispatch(setIdSelected(menu))
+  }
 
   {
     /**Function to edit product quantity (add and substract) */
   }
 
-
-  function editOrderProductsQuantity(action, menuId, price) {
-
+  function editOrderProductsQuantity(action, menuId, price, image, name) {
     let orderList = orderItems.slice();
     let item = orderList.filter(a => a.menuId == menuId)
 
@@ -61,7 +84,7 @@ const Restaurant = ({ route, navigation }) => {
           menuId: menuId,
           quantity: 1,
           price: price,
-          total: price
+          total: price,
         }
         orderList.push(newItem)
       }
@@ -75,9 +98,7 @@ const Restaurant = ({ route, navigation }) => {
           item[0].total = NewQuantity * price
         }
       }
-
       setOrderItems(orderList)
-
     }
   }
 
@@ -106,8 +127,6 @@ const Restaurant = ({ route, navigation }) => {
     let itemCount = orderItems.reduce((a, b) => a + (b.quantity || 0), 0)
 
     return itemCount
-
-
   }
 
   {
@@ -174,7 +193,7 @@ const Restaurant = ({ route, navigation }) => {
           <View key={`menu-${index}`} style={{ alignItems: "center" }}>
             <View
               style={{
-                height: "55%",
+                height: "50%",
               }}
             >
               <Image
@@ -267,31 +286,6 @@ const Restaurant = ({ route, navigation }) => {
                 </TouchableOpacity>
               </View>
             </View>
-
-            {/**Delete cart products (Reset)*/}
-
-            {/*<TouchableOpacity
-              style={{
-                width: screenWidth * 0.15,
-                padding: 10,
-                backgroundColor: '#f77f00',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 30,
-                top: 35,
-                marginLeft: 0,
-                marginBottom: 20,
-                ...styles.shadow
-              }}
-              //onPress={() => dispatch(reset())}
-            >
-              <View>
-                <Entypo
-                  name="trash"
-                  size={24}
-                  color="black" />
-              </View>
-            </TouchableOpacity>*/}
 
             {/**name & desciption*/}
 
@@ -493,6 +487,7 @@ const Restaurant = ({ route, navigation }) => {
             >
               <Image
                 source={icons.master_card}
+                tintColor={COLORS.secondary2}
                 resizeMode="contain"
                 style={{
                   width: 30,
@@ -527,9 +522,10 @@ const Restaurant = ({ route, navigation }) => {
             }}
             onPress={() => navigation.navigate('OrderDelivery', {
               restaurants: restaurants,
-              currentLocation: currentLocation
-            }
-            )}
+              currentLocation: currentLocation,
+              menuId: restaurants.menu.menuId,
+            })}
+
           >
             <View>
               <Text
@@ -610,5 +606,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 10
-  }
+  },
+  IndicatorContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
 });

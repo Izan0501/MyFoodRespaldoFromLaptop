@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 import React from 'react';
-//import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import icons from '../constants/icons';
 
@@ -25,7 +25,7 @@ const screenWidth = Dimensions.get("window").width;
 }*/
 
 const OrderDelivery = ({ route, navigation }) => {
-
+  const [menuId, setMenuId] = React.useState(null)
   const [restaurants, setRestaurants] = React.useState(null);
   const [streetName, setStreetName] = React.useState('')
 
@@ -34,7 +34,6 @@ const OrderDelivery = ({ route, navigation }) => {
   const handleOnPressModal = () => {
     setOpenModal(!openStartModal)
   }
-
 
   {/**function of render data picker for user */ }
   function renderModalProducts() {
@@ -60,15 +59,22 @@ const OrderDelivery = ({ route, navigation }) => {
                 color="red"
               />
             </TouchableOpacity>
+            <View>
+              <Text 
+                style= {styles.modalTextContent}
+              >
+                Your order is being generated!!
+              </Text>
+            </View>
 
             <TouchableOpacity
               style={styles.deliveryBtn2}
-              onPress={handleOnPressModal}
+              onPress={()=> navigation.navigate('Home')}
             >
               <Text
                 style={styles.btnText}
               >
-                Confirm Order
+                Agree
               </Text>
             </TouchableOpacity>
           </View>
@@ -80,10 +86,12 @@ const OrderDelivery = ({ route, navigation }) => {
 
   React.useEffect(() => {
 
-    let { restaurants, currentLocation } = route.params;
+    let { restaurants, currentLocation, menuId } = route.params;
 
     let street = currentLocation.streetName
 
+
+    // setMenuId(menuId);
     setRestaurants(restaurants);
     setStreetName(street)
 
@@ -101,16 +109,15 @@ const OrderDelivery = ({ route, navigation }) => {
 
   {/**Map delivery section  */ }
 
-  /*function renderMap() {
+  function renderMap() {
     return (
       <MapView
         style={styles.map}
         //INITIAL_REGION={INITIAL_REGION}
         showsUserLocation
-
       />
     )
-  }*/
+  }
 
   {/**order delivery header info */ }
 
@@ -176,7 +183,7 @@ const OrderDelivery = ({ route, navigation }) => {
 
             <Image
               style={styles.deliveryProfileImage}
-              source={restaurants?.deliveryMan.avatar}
+              source={{ uri: restaurants?.deliveryMan.avatar }}
             />
             <View
               style={{
@@ -245,7 +252,7 @@ const OrderDelivery = ({ route, navigation }) => {
               <Text
                 style={styles.btnText}
               >
-                Your Order
+                Confirm Order
               </Text>
             </TouchableOpacity>
 
@@ -292,7 +299,7 @@ const OrderDelivery = ({ route, navigation }) => {
     <SafeAreaView>
       <View
       >
-
+        {renderMap()} 
         {renderDeliveryHeader()}
         {renderDeliveryInfo()}
         {renderMapZoomButtons()}
@@ -438,6 +445,14 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: -33,
     left: 155
-
+  },
+  modalTextContent: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexDirection: 'center',
+    marginBottom: 40,
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
   }
 })

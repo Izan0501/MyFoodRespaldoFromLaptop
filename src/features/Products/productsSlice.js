@@ -4,8 +4,8 @@ const productsSlice = createSlice({
     name: "shop",
     initialState: {
         value: {
-            categorySelected: "",
-            itemIdSelected: "",
+            categorySelected: "",//selectedCategory
+            itemIdSelected: "",//Menus of the selected restaurant
         }
     },
     reducers: {

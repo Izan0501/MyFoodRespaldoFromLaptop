@@ -17,7 +17,12 @@ export const shopApi = createApi({
             }
         }),
         getProductsById: builder.query({
-            query: (productId) => `products.json?orderBy="id"&equalTo=${productId}`
+            query: (menu) => `restaurants.json?orderBy="menu"&equalsTo=${menu}`,
+            transformResponse : (response) => {
+                const responseTransformed = Object.values(response)
+                if(responseTransformed.lenght) return responseTransformed[0]
+                return null
+            }
         })
     }),
 

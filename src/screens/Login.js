@@ -8,6 +8,7 @@ import { setUser } from "../features/Users/userSlice";
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from "react-redux";
 import { signinSchema } from "../validations/authLoginShema";
+import { insertSession } from "../persistence";
 
 const Login = ({ navigation }) => {
 
@@ -20,17 +21,27 @@ const Login = ({ navigation }) => {
   const [showPass, setShowPass] = useState(false)
 
   useEffect(() => {
-    if (result.isSuccess) {
-      dispatch(
-        setUser({
-          email: result.data.email,
-          idToken: result.data.idToken
+    if (result?.data && result.isSuccess) {
+      insertSession({
+        email: result.data.email,
+        localId: result.data.localId,
+        token: result.data.idToken
+      })
+        .then((response) => {
+          dispatch(
+            setUser({
+              email: result.data.email,
+              idToken: result.data.idToken,
+              localId: result.data.localId
+            })
+          )
         })
-      )
+        .catch((err) => {
+        })
     }
   }, [result])
 
-  {/**Handle Password show-hide Content*/}
+  {/**Handle Password show-hide Content*/ }
   const onPressShowPass = () => {
     setShowPass(!showPass)
   }

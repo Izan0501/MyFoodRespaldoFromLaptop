@@ -15,9 +15,14 @@ import React from 'react'
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
+import { useDispatch } from 'react-redux';
+import { clearUser, setUser } from '../features/Users/userSlice';
+import { truncateSessionsTable } from '../persistence';
+
 
 const Profile = ({ navigation }) => {
+
+    const dispatch = useDispatch()
 
     {/**returnToHome function */ }
     const returnToHome = () => {
@@ -30,10 +35,10 @@ const Profile = ({ navigation }) => {
     const [selectedImage, setSelectedImage] = useState(defaultImageRoute);
 
     {/**Name User Edit  */ }
-    const [name, setName] = useState("User");
+    const [name, setName] = useState('user');
 
     {/**Name User Edit  */ }
-    const [email, setEmail] = useState("UserName@gmail.com")
+    const [email, setEmail] = useState('user@gmail.com')
 
     {/**Password User Edit */ }
     const [password, setPassword] = useState("RandomPassword");
@@ -51,12 +56,20 @@ const Profile = ({ navigation }) => {
             quality: 1
         })
 
-        console.log(result.assets);
-
         if (!result.canceled) {
             setSelectedImage(result.assets[0])
         }
 
+    }
+
+    const signOut = async () => {
+        try {
+            const response = await truncateSessionsTable()
+            
+            dispatch(clearUser())
+
+        } catch (error) {
+        }
     }
 
     return (
@@ -166,6 +179,7 @@ const Profile = ({ navigation }) => {
 
                 <TouchableOpacity
                    style= {styles.saveButton}
+                   onPress={signOut}
                 >
                     <Text
                         style={{
@@ -174,7 +188,7 @@ const Profile = ({ navigation }) => {
                             fontSize:20
                         }}
                     >
-                        Save Changes
+                        Sign Out
                     </Text>
                 </TouchableOpacity>
             </ScrollView>

@@ -3,8 +3,16 @@ import React from "react";
 import store from "./src/store";
 import { useFonts } from "expo-font";
 import { Provider } from "react-redux";
+import { initSQLiteDB } from "./src/persistence";
 
-export default function App() {
+(async () => {
+  try {
+    const response = await initSQLiteDB()
+  } catch (error) {
+  }
+})()
+
+const App = () => {
   const [fontsLoaded, fontError] = useFonts({
     Josefin: require('./src/assets/JosefinSans-Regular.ttf')
   })
@@ -20,7 +28,7 @@ export default function App() {
       </Provider>
     );
   }
-
-
 }
+
+export default App
 

@@ -19,27 +19,21 @@ const SettingsScreen = ({ navigation }) => {
   };
 
   const navigateToSecurity = () => {
-    console.log('Security function');
   };
 
   const navigateToNotifications = () => {
-    console.log('Notifications function');
   };
 
   const navigateToPrivacy = () => {
-    console.log('Privacity function');
   };
 
   const navigateToSubscription = () => {
-    console.log('Privacity function');
   };
 
   const navigateToSupport = () => {
-    console.log('Privacity function');
   };
 
   const navigateToTermsAndPolicies = () => {
-    console.log('Privacity function');
   };
 
   const returnToHome = () => {
@@ -47,23 +41,18 @@ const SettingsScreen = ({ navigation }) => {
   };
 
   const navigateToFreeSpace = () => {
-    console.log('Free Space Function');
   }
 
   const navigateToDateServer = () => {
-    console.log('Date server');
   }
 
   const navigateToReportProblem = () => {
-    console.log('Report a Problem');
   }
 
   const addAccount = () => {
-    console.log('Add Account');
   }
 
   const logout = () => {
-    console.log('Logout');
   }
 
   {/** Account Items */ }
