@@ -8,7 +8,6 @@ import {
     ScrollView,
     Image,
     TextInput,
-    Modal
 } from 'react-native'
 
 import React from 'react'
@@ -16,59 +15,90 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch } from 'react-redux';
-import { clearUser, setUser } from '../features/Users/userSlice';
+import { clearUser, setLibraryImage } from '../features/Users/userSlice';
 import { truncateSessionsTable } from '../persistence';
-
+import { useSelector } from 'react-redux';
+import { usePostProfileImageMutation } from '../services/shopServices';
 
 const Profile = ({ navigation }) => {
+    {/**Profile Image Edit */ }
+    const [image, setImage] = useState(null);
+    
+    const {triggerPostImage, result} = usePostProfileImageMutation()
+
+    const { user } = useSelector(state => state.auth.value)
+    const {localId} = useSelector(state => state.auth.value)
+    const { imageLibrary } = useSelector(state => state.auth.value)
 
     const dispatch = useDispatch()
+
+    const imageFromBase = null
 
     {/**returnToHome function */ }
     const returnToHome = () => {
         navigation.navigate('Restaurant')
     };
 
-    const defaultImageRoute = require('../assets/defaultProfile.png')
+    const defaultImageRoute = 'https://i.ibb.co/GPc0JyC/default-Profile.png'
 
-    {/**Profile Image Edit */ }
-    const [selectedImage, setSelectedImage] = useState(defaultImageRoute);
 
     {/**Name User Edit  */ }
-    const [name, setName] = useState('user');
-
-    {/**Name User Edit  */ }
-    const [email, setEmail] = useState('user@gmail.com')
+    const [email, setEmail] = useState(user)
 
     {/**Password User Edit */ }
-    const [password, setPassword] = useState("RandomPassword");
+    const [password, setPassword] = useState("Random");
 
     {/**Location User*/ }
     const [country, setCountry] = useState("Argentina");
 
+    {/**verify profile image Permissions */ }
+    const verifyLibraryPermissions = async () => {
+        const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+        return granted
+    }
+
     {/**edit profile image function */ }
     const handleImageSelection = async () => {
+        try {
+            const isLibraryOk = await verifyLibraryPermissions()
 
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 4],
-            quality: 1
-        })
+            if (isLibraryOk) {
+                let result = await ImagePicker.launchImageLibraryAsync({
+                    mediaTypes: ImagePicker.MediaTypeOptions.All,
+                    allowsEditing: true,
+                    aspect: [4, 4],
+                    quality: 0.5,
+                    base64: true
+                })
 
-        if (!result.canceled) {
-            setSelectedImage(result.assets[0])
+                if (!result.canceled) {
+                    const image = `data:image/jpeg;base64,${result.assets[0].base64}`
+                    setImage(image)
+                }
+
+            }
+        } catch (error) {
+            return error
         }
+    }
 
+    const confirmImage = async () => {
+        try {
+            dispatch(setLibraryImage(image))
+            triggerPostImage({ image, localId })
+        } catch (error) {
+            return error
+        }
     }
 
     const signOut = async () => {
         try {
             const response = await truncateSessionsTable()
-            
+
             dispatch(clearUser())
 
         } catch (error) {
+            return error
         }
     }
 
@@ -104,11 +134,19 @@ const Profile = ({ navigation }) => {
                 >
                     <TouchableOpacity
                         onPress={handleImageSelection}
-                    >
-                        <Image
-                            source={selectedImage}
-                            style={styles.avatarImage}
-                        />
+                        >
+                        { imageFromBase || image || imageLibrary ? (
+                            <Image
+                                source={{ uri:  imageFromBase?.image || image || imageLibrary }}
+                                style={styles.avatarImage}
+                            />
+
+                        ):(
+                            <Image
+                                source={{ uri: defaultImageRoute }}
+                                style={styles.avatarImage}
+                            />
+                        )}
                         <View
                             style={styles.imageBtn}
                         >
@@ -122,19 +160,7 @@ const Profile = ({ navigation }) => {
                 </View>
 
                 <View>
-                    <View
-                        style={styles.inputContainer}
-                    >
-                        <Text style={styles.inputTitleContent}>Name</Text>
-                        <View style={styles.inputContent}>
-                            <TextInput
-                                cursorColor={'gray'}
-                                value={name}
-                                onChangeText={value => setName(value)}
-                                editable={true}
-                            />
-                        </View>
-                    </View>
+
                     <View
                         style={styles.inputContainer}
                     >
@@ -143,8 +169,6 @@ const Profile = ({ navigation }) => {
                             <TextInput
                                 cursorColor={'gray'}
                                 value={email}
-                                onChangeText={value => setEmail(value)}
-                                editable={true}
                             />
                         </View>
                     </View>
@@ -156,8 +180,6 @@ const Profile = ({ navigation }) => {
                             <TextInput
                                 cursorColor={'gray'}
                                 value={password}
-                                onChangeText={value => setPassword(value)}
-                                editable={true}
                                 secureTextEntry
                             />
                         </View>
@@ -177,20 +199,39 @@ const Profile = ({ navigation }) => {
                     </View>
                 </View>
 
-                <TouchableOpacity
-                   style= {styles.saveButton}
-                   onPress={signOut}
+                <View
+                    style= {styles.buttonsContainer}
                 >
-                    <Text
-                        style={{
-                            color: 'white',
-                            fontWeight: 'bold',
-                            fontSize:20
-                        }}
+                    <TouchableOpacity
+                        style={styles.signOutButton}
+                        onPress={signOut}
                     >
-                        Sign Out
-                    </Text>
-                </TouchableOpacity>
+                        <Text
+                            style={{
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20
+                            }}
+                        >
+                            Sign Out
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.saveButton}
+                        onPress={confirmImage}
+                    >
+                        <Text
+                            style={{
+                                color: 'white',
+                                fontWeight: 'bold',
+                                fontSize: 20
+                            }}
+                        >
+                            Save Changes
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
@@ -283,14 +324,30 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
-    saveButton: {
+    buttonsContainer : {
+        flexDirection: 'row',
+        padding : 5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    signOutButton: {
         backgroundColor: '#FC6D3F',
         height: 44,
         borderRadius: 6,
         alignItems: 'center',
         justifyContent: 'center',
-        width: '75%',
-        marginLeft: 47.5,
-        marginTop: 7
+        width: '40%',
+        //marginLeft: 47.5,
+        marginTop: 50
+    },
+    saveButton: {
+        backgroundColor: '#56008c',
+        height: 44,
+        borderRadius: 6,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '40%',
+        marginLeft: 15,
+        marginTop: 50
     }
 })

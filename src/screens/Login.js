@@ -37,6 +37,7 @@ const Login = ({ navigation }) => {
           )
         })
         .catch((err) => {
+          return err
         })
     }
   }, [result])

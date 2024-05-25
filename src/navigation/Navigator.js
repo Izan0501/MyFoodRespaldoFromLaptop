@@ -25,14 +25,14 @@ const  Navigator = () => {
           }))
         }
       } catch (error) {
-        
+        return error
       }
     })()
   }, [])
 
   return (
     <NavigationContainer>
-        {user ? <AppNavigator /> : <AuthStackNavigator />}
+        {user ? <AppNavigator/> : <AuthStackNavigator/>}
     </NavigationContainer>
   );
 }

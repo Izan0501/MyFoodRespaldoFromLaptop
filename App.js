@@ -9,6 +9,7 @@ import { initSQLiteDB } from "./src/persistence";
   try {
     const response = await initSQLiteDB()
   } catch (error) {
+    return error
   }
 })()
 
