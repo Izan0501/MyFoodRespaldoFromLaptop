@@ -18,29 +18,28 @@ import { useDispatch } from 'react-redux';
 import { clearUser, setLibraryImage } from '../features/Users/userSlice';
 import { truncateSessionsTable } from '../persistence';
 import { useSelector } from 'react-redux';
-import { usePostProfileImageMutation } from '../services/shopServices';
+import { useGetProfileImageQuery, usePostProfileImageMutation } from '../services/shopServices';
 
 const Profile = ({ navigation }) => {
     {/**Profile Image Edit */ }
     const [image, setImage] = useState(null);
     
-    const {triggerPostImage, result} = usePostProfileImageMutation()
+    const [triggerPostImage, result] = usePostProfileImageMutation()
 
     const { user } = useSelector(state => state.auth.value)
-    const {localId} = useSelector(state => state.auth.value)
     const { imageLibrary } = useSelector(state => state.auth.value)
+    const {localId} = useSelector(state => state.auth.value)
+    const {data: imageFromBase} = useGetProfileImageQuery(localId)
 
     const dispatch = useDispatch()
 
-    const imageFromBase = null
+    
+    const defaultImageRoute = 'https://i.ibb.co/GPc0JyC/default-Profile.png'
 
     {/**returnToHome function */ }
     const returnToHome = () => {
         navigation.navigate('Restaurant')
     };
-
-    const defaultImageRoute = 'https://i.ibb.co/GPc0JyC/default-Profile.png'
-
 
     {/**Name User Edit  */ }
     const [email, setEmail] = useState(user)
@@ -137,7 +136,7 @@ const Profile = ({ navigation }) => {
                         >
                         { imageFromBase || image || imageLibrary ? (
                             <Image
-                                source={{ uri:  imageFromBase?.image || image || imageLibrary }}
+                                source={{ uri:  imageFromBase?.image || image }}
                                 style={styles.avatarImage}
                             />
 
