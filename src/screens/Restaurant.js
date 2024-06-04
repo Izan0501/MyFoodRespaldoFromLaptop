@@ -465,7 +465,7 @@ const Restaurant = ({ route, navigation }) => {
                   marginTop: 3.5,
                   width: 20,
                   height: 20,
-                  tintColor: 'darkgray'
+                  tintColor: COLORS.secondary2
                 }}
               />
               <Text
